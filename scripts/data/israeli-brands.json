@@ -1,0 +1,918 @@
+[
+  {
+    "name_he": "קוטג' תנובה 5%",
+    "name_en": "Tnuva Cottage Cheese 5%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "חצי מכל (~125 גרם)", "label_en": "Half container (~125g)", "grams": 125, "yellow_stars": 1.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "קוטג' תנובה 3%",
+    "name_en": "Tnuva Cottage Cheese 3%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "חצי מכל (~125 גרם)", "label_en": "Half container (~125g)", "grams": 125, "yellow_stars": 1.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה בולגרית תנובה 5%",
+    "name_en": "Tnuva Bulgarian Cheese 5%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "פרוסה (~30 גרם)", "label_en": "1 slice (~30g)", "grams": 30, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה בולגרית תנובה 3%",
+    "name_en": "Tnuva Bulgarian Cheese 3%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "פרוסה (~30 גרם)", "label_en": "1 slice (~30g)", "grams": 30, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "לבנה תנובה 5%",
+    "name_en": "Tnuva Labane 5%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "2 כפות (~30 גרם)", "label_en": "2 tbsp (~30g)", "grams": 30, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "לבנה תנובה 9%",
+    "name_en": "Tnuva Labane 9%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "2 כפות (~30 גרם)", "label_en": "2 tbsp (~30g)", "grams": 30, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה לבנה תנובה 5%",
+    "name_en": "Tnuva White Cheese 5%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "200 גרם", "label_en": "200g", "grams": 200, "yellow_stars": 2.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה לבנה תנובה 9%",
+    "name_en": "Tnuva White Cheese 9%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "200 גרם", "label_en": "200g", "grams": 200, "yellow_stars": 3.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה צהובה תנובה 9%",
+    "name_en": "Tnuva Yellow Cheese 9%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "פרוסה (~30 גרם)", "label_en": "1 slice (~30g)", "grams": 30, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה צהובה תנובה 28%",
+    "name_en": "Tnuva Yellow Cheese 28%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "פרוסה (~30 גרם)", "label_en": "1 slice (~30g)", "grams": 30, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 3.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "חלב תנובה 3%",
+    "name_en": "Tnuva Milk 3%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס (~200 מ\"ל)", "label_en": "1 glass (~200ml)", "grams": 200, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 מ\"ל", "label_en": "100ml", "grams": 100, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "חלב תנובה 1%",
+    "name_en": "Tnuva Milk 1%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס (~200 מ\"ל)", "label_en": "1 glass (~200ml)", "grams": 200, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 מ\"ל", "label_en": "100ml", "grams": 100, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שוקו תנובה 1%",
+    "name_en": "Tnuva Chocolate Milk 1%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "קרטון (~200 מ\"ל)", "label_en": "Carton (~200ml)", "grams": 200, "yellow_stars": 1.5, "red_stars": 0.5, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "יוגורט תנובה 3%",
+    "name_en": "Tnuva Yogurt 3%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~125 גרם)", "label_en": "1 serving (~125g)", "grams": 125, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "יוגורט תנובה 0%",
+    "name_en": "Tnuva Yogurt 0%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~125 גרם)", "label_en": "1 serving (~125g)", "grams": 125, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שמנת חמוצה תנובה 15%",
+    "name_en": "Tnuva Sour Cream 15%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "2 כפות (~30 גרם)", "label_en": "2 tbsp (~30g)", "grams": 30, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שמנת מתוקה תנובה 38%",
+    "name_en": "Tnuva Heavy Cream 38%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "2 כפות (~30 גרם)", "label_en": "2 tbsp (~30g)", "grams": 30, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 3.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "יוגורט יווני סטראוס 0%",
+    "name_en": "Strauss Greek Yogurt 0%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~150 גרם)", "label_en": "1 serving (~150g)", "grams": 150, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "יוגורט יווני סטראוס 2%",
+    "name_en": "Strauss Greek Yogurt 2%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~150 גרם)", "label_en": "1 serving (~150g)", "grams": 150, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינת שמנת סטראוס",
+    "name_en": "Strauss Cream Cheese",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "2 כפות (~30 גרם)", "label_en": "2 tbsp (~30g)", "grams": 30, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 3.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה אשל סטראוס 8%",
+    "name_en": "Strauss Eshel Sour Cream 8%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "יוגורט דנונה 0%",
+    "name_en": "Danone Yogurt 0%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~125 גרם)", "label_en": "1 serving (~125g)", "grams": 125, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "שמנת לבישול תנובה 10%",
+    "name_en": "Tnuva Cooking Cream 10%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 מ\"ל", "label_en": "100ml", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "שליש מכל (~85 מ\"ל)", "label_en": "1/3 container (~85ml)", "grams": 85, "yellow_stars": 1.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה עמק",
+    "name_en": "Emek Cheese (Yellow)",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "פרוסה (~30 גרם)", "label_en": "1 slice (~30g)", "grams": 30, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 3.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "קרקרים אוסם 100% מחיטה מלאה",
+    "name_en": "Osem 100% Whole Wheat Crackers",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "3 קרקרים (~20 גרם)", "label_en": "3 crackers (~20g)", "grams": 20, "yellow_stars": 0, "red_stars": 0.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "6 קרקרים (~40 גרם)", "label_en": "6 crackers (~40g)", "grams": 40, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 2 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.0, "is_default": false, "sort_order": 3 }
+    ]
+  },
+  {
+    "name_he": "קרקרים אוסם רגילים",
+    "name_en": "Osem Regular Crackers",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "3 קרקרים (~20 גרם)", "label_en": "3 crackers (~20g)", "grams": 20, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "פסטה ספגטי אוסם",
+    "name_en": "Osem Spaghetti",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0, "red_stars": 2.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 0, "red_stars": 1.5, "is_default": false, "sort_order": 2 },
+      { "label_he": "3 כפות יבש (~30 גרם)", "label_en": "3 tbsp dry (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 3 }
+    ]
+  },
+  {
+    "name_he": "פסטה מרפק אוסם",
+    "name_en": "Osem Elbow Pasta",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0, "red_stars": 2.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 0, "red_stars": 1.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "פסטה פוזילי אוסם",
+    "name_en": "Osem Fusilli Pasta",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0, "red_stars": 2.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 0, "red_stars": 1.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "קוסקוס אוסם",
+    "name_en": "Osem Couscous",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0, "red_stars": 2.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "3 כפות יבש (~30 גרם)", "label_en": "3 tbsp dry (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 2 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 3 }
+    ]
+  },
+  {
+    "name_he": "שקדי מרק אוסם",
+    "name_en": "Osem Soup Nuts (Mandeln)",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~10 גרם)", "label_en": "1 tbsp (~10g)", "grams": 10, "yellow_stars": 0, "red_stars": 0.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "3 כפות (~30 גרם)", "label_en": "3 tbsp (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "אטריות ביצים אוסם",
+    "name_en": "Osem Egg Noodles",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0, "red_stars": 2.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "אורז אוסם לבן",
+    "name_en": "Osem White Rice",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0, "red_stars": 2.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "3 כפות יבש (~30 גרם)", "label_en": "3 tbsp dry (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "פיתות מיני אוסם",
+    "name_en": "Osem Mini Pita Chips",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "חופן (~20 גרם)", "label_en": "1 handful (~20g)", "grams": 20, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 4.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "קורנפלקס טלמה",
+    "name_en": "Telma Cornflakes",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "קערה (~40 גרם)", "label_en": "1 bowl (~40g)", "grams": 40, "yellow_stars": 0, "red_stars": 1.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 4.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שיבולת שועל מהירה טלמה",
+    "name_en": "Telma Quick Oats",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "3 כפות יבש (~25 גרם)", "label_en": "3 tbsp dry (~25g)", "grams": 25, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "6 כפות יבש (~50 גרם)", "label_en": "6 tbsp dry (~50g)", "grams": 50, "yellow_stars": 0, "red_stars": 2.0, "is_default": false, "sort_order": 2 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 4.0, "is_default": false, "sort_order": 3 }
+    ]
+  },
+  {
+    "name_he": "גרנולה טלמה דבש",
+    "name_en": "Telma Honey Granola",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "קערה (~40 גרם)", "label_en": "1 bowl (~40g)", "grams": 40, "yellow_stars": 0, "red_stars": 1.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "במבה",
+    "name_en": "Bamba (Peanut Puffs)",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "שקית קטנה (~30 גרם)", "label_en": "Small bag (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "ביסלי גריל",
+    "name_en": "Bisli Grill",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "שקית קטנה (~30 גרם)", "label_en": "Small bag (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "ביסלי בצל",
+    "name_en": "Bisli Onion",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "שקית קטנה (~30 גרם)", "label_en": "Small bag (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שוקולד עלית מריר 70%",
+    "name_en": "Elite Dark Chocolate 70%",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "2 קוביות (~25 גרם)", "label_en": "2 squares (~25g)", "grams": 25, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g (full bar)", "grams": 100, "yellow_stars": 0, "red_stars": 2.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שוקולד עלית חלב",
+    "name_en": "Elite Milk Chocolate",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "2 קוביות (~25 גרם)", "label_en": "2 squares (~25g)", "grams": 25, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g (full bar)", "grams": 100, "yellow_stars": 0, "red_stars": 3.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שוקולד עלית לבן",
+    "name_en": "Elite White Chocolate",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "2 קוביות (~25 גרם)", "label_en": "2 squares (~25g)", "grams": 25, "yellow_stars": 0, "red_stars": 1.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g (full bar)", "grams": 100, "yellow_stars": 0, "red_stars": 3.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "ויפל שוקולד",
+    "name_en": "Chocolate Wafer (Elite)",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "2 יחידות (~25 גרם)", "label_en": "2 pieces (~25g)", "grams": 25, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "פטי-בר",
+    "name_en": "Petit Beurre Biscuits (Elite)",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "3 ביסקוויטים (~30 גרם)", "label_en": "3 biscuits (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "טחינה גולמית גרעינים",
+    "name_en": "Raw Tahini - Grains Brand",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~15 גרם)", "label_en": "1 tbsp (~15g)", "grams": 15, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "2 כפות (~30 גרם)", "label_en": "2 tbsp (~30g)", "grams": 30, "yellow_stars": 2.0, "red_stars": 0, "is_default": false, "sort_order": 2 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 6.0, "red_stars": 0, "is_default": false, "sort_order": 3 }
+    ]
+  },
+  {
+    "name_he": "טחינה מוכנה",
+    "name_en": "Ready Tahini (Prepared)",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "2 כפות (~30 גרם)", "label_en": "2 tbsp (~30g)", "grams": 30, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 2.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "חמאת בוטנים טבעית",
+    "name_en": "Natural Peanut Butter - Brand",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~15 גרם)", "label_en": "1 tbsp (~15g)", "grams": 15, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 6.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שמן זית כתית מעולה",
+    "name_en": "Extra Virgin Olive Oil",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~13 גרם)", "label_en": "1 tbsp (~13g)", "grams": 13, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "כפית (~4 גרם)", "label_en": "1 tsp (~4g)", "grams": 4, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שמן קנולה",
+    "name_en": "Canola Oil",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~13 גרם)", "label_en": "1 tbsp (~13g)", "grams": 13, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "כפית (~4 גרם)", "label_en": "1 tsp (~4g)", "grams": 4, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "אבוקדו (ממרח)",
+    "name_en": "Avocado Spread (Guacamole)",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "2 כפות (~30 גרם)", "label_en": "2 tbsp (~30g)", "grams": 30, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "חצי אבוקדו (~80 גרם)", "label_en": "Half avocado (~80g)", "grams": 80, "yellow_stars": 1.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שקדים קלויים",
+    "name_en": "Roasted Almonds",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "חופן (~30 גרם)", "label_en": "1 handful (~30g)", "grams": 30, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 5.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "פיסטוקים",
+    "name_en": "Pistachios",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "חופן (~30 גרם)", "label_en": "1 handful (~30g)", "grams": 30, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 5.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "בוטנים קלויים",
+    "name_en": "Roasted Peanuts",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "חופן (~30 גרם)", "label_en": "1 handful (~30g)", "grams": 30, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 5.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גרעיני חמנייה קלויים",
+    "name_en": "Roasted Sunflower Seeds",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "3 כפות (~30 גרם)", "label_en": "3 tbsp (~30g)", "grams": 30, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 5.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גרעיני דלעת",
+    "name_en": "Pumpkin Seeds",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "3 כפות (~30 גרם)", "label_en": "3 tbsp (~30g)", "grams": 30, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 5.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "נקניק עוף תנובה",
+    "name_en": "Tnuva Chicken Sausage",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "2 נקניקים (~80 גרם)", "label_en": "2 sausages (~80g)", "grams": 80, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "נקניקיות עוף תנובה",
+    "name_en": "Tnuva Chicken Hot Dogs",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "נקניקייה אחת (~50 גרם)", "label_en": "1 hot dog (~50g)", "grams": 50, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "2 נקניקיות (~100 גרם)", "label_en": "2 hot dogs (~100g)", "grams": 100, "yellow_stars": 2.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שניצל עוף קפוא מוכן",
+    "name_en": "Frozen Ready Chicken Schnitzel",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "שניצל אחד (~130 גרם)", "label_en": "1 schnitzel (~130g)", "grams": 130, "yellow_stars": 2.0, "red_stars": 1.0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "שניצל הודו מוכן",
+    "name_en": "Ready Turkey Schnitzel",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "שניצל אחד (~130 גרם)", "label_en": "1 schnitzel (~130g)", "grams": 130, "yellow_stars": 2.0, "red_stars": 1.0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "קציצות בקר קפואות",
+    "name_en": "Frozen Beef Patties",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "קציצה (~120 גרם)", "label_en": "1 patty (~120g)", "grams": 120, "yellow_stars": 2.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 2.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "פלאפל כדורים מטוגנים",
+    "name_en": "Fried Falafel Balls",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "3 כדורים (~60 גרם)", "label_en": "3 balls (~60g)", "grams": 60, "yellow_stars": 1.0, "red_stars": 0.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "5 כדורים (~100 גרם)", "label_en": "5 balls (~100g)", "grams": 100, "yellow_stars": 2.0, "red_stars": 1.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "טופו לבן קשה",
+    "name_en": "Hard White Tofu",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "150 גרם", "label_en": "150g", "grams": 150, "yellow_stars": 1.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "טמפה",
+    "name_en": "Tempeh",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 2.0, "red_stars": 0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "חומוס ממרח ביתי",
+    "name_en": "Homemade-Style Hummus Spread",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "3 כפות (~80 גרם)", "label_en": "3 tbsp (~80g)", "grams": 80, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 2.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "חלב סויה",
+    "name_en": "Soy Milk (Beverage)",
+    "category": "beverage", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס (~240 מ\"ל)", "label_en": "1 cup (~240ml)", "grams": 240, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 מ\"ל", "label_en": "100ml", "grams": 100, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "חלב שקדים",
+    "name_en": "Almond Milk (Beverage)",
+    "category": "beverage", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס (~240 מ\"ל)", "label_en": "1 cup (~240ml)", "grams": 240, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 מ\"ל", "label_en": "100ml", "grams": 100, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "מיץ תפוזים סחוט טרי",
+    "name_en": "Fresh Squeezed Orange Juice",
+    "category": "fruit", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס (~200 מ\"ל)", "label_en": "1 cup (~200ml)", "grams": 200, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "מיץ אשכוליות סחוט",
+    "name_en": "Fresh Squeezed Grapefruit Juice",
+    "category": "fruit", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס (~200 מ\"ל)", "label_en": "1 cup (~200ml)", "grams": 200, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "דבש",
+    "name_en": "Honey",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כפית (~7 גרם)", "label_en": "1 tsp (~7g)", "grams": 7, "yellow_stars": 0, "red_stars": 0.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "כף (~21 גרם)", "label_en": "1 tbsp (~21g)", "grams": 21, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "סילאן (דבש תמרים)",
+    "name_en": "Silan (Date Syrup)",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כפית (~7 גרם)", "label_en": "1 tsp (~7g)", "grams": 7, "yellow_stars": 0, "red_stars": 0.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "כף (~21 גרם)", "label_en": "1 tbsp (~21g)", "grams": 21, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "ריבת תות",
+    "name_en": "Strawberry Jam",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~20 גרם)", "label_en": "1 tbsp (~20g)", "grams": 20, "yellow_stars": 0, "red_stars": 0.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "הלווה",
+    "name_en": "Halva (Sesame Candy)",
+    "category": "snack", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "פרוסה (~30 גרם)", "label_en": "1 slice (~30g)", "grams": 30, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 5.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "מיונז",
+    "name_en": "Mayonnaise",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~15 גרם)", "label_en": "1 tbsp (~15g)", "grams": 15, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "כפית (~5 גרם)", "label_en": "1 tsp (~5g)", "grams": 5, "yellow_stars": 0.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "מיונז קל",
+    "name_en": "Light Mayonnaise",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~15 גרם)", "label_en": "1 tbsp (~15g)", "grams": 15, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "2 כפות (~30 גרם)", "label_en": "2 tbsp (~30g)", "grams": 30, "yellow_stars": 1.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "רסק עגבניות",
+    "name_en": "Tomato Paste",
+    "category": "vegetable", "star_type": "free", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~15 גרם)", "label_en": "1 tbsp (~15g)", "grams": 15, "yellow_stars": 0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "רוטב טריאקי",
+    "name_en": "Teriyaki Sauce",
+    "category": "snack", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~15 גרם)", "label_en": "1 tbsp (~15g)", "grams": 15, "yellow_stars": 0, "red_stars": 0.5, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "רוטב סויה",
+    "name_en": "Soy Sauce",
+    "category": "vegetable", "star_type": "free", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~15 גרם)", "label_en": "1 tbsp (~15g)", "grams": 15, "yellow_stars": 0, "red_stars": 0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "חרדל",
+    "name_en": "Mustard",
+    "category": "vegetable", "star_type": "free", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~15 גרם)", "label_en": "1 tbsp (~15g)", "grams": 15, "yellow_stars": 0, "red_stars": 0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "חומץ תפוחים",
+    "name_en": "Apple Cider Vinegar",
+    "category": "vegetable", "star_type": "free", "source": "manual",
+    "portions": [
+      { "label_he": "כף (~15 גרם)", "label_en": "1 tbsp (~15g)", "grams": 15, "yellow_stars": 0, "red_stars": 0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "בורקס גבינה",
+    "name_en": "Cheese Burekas",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "בורקס אחד (~80 גרם)", "label_en": "1 burekas (~80g)", "grams": 80, "yellow_stars": 0.5, "red_stars": 2.0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "קרואסון חמאה",
+    "name_en": "Butter Croissant",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "קרואסון אחד (~60 גרם)", "label_en": "1 croissant (~60g)", "grams": 60, "yellow_stars": 0, "red_stars": 2.0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "בייגל",
+    "name_en": "Bagel",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "בייגל אחד (~100 גרם)", "label_en": "1 bagel (~100g)", "grams": 100, "yellow_stars": 0, "red_stars": 2.5, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "טורטייה חיטה",
+    "name_en": "Wheat Tortilla Wrap",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "עלה אחד (~40 גרם)", "label_en": "1 wrap (~40g)", "grams": 40, "yellow_stars": 0, "red_stars": 1.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "לחם אורז ללא גלוטן",
+    "name_en": "Gluten-Free Rice Bread",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "פרוסה (~30 גרם)", "label_en": "1 slice (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 0, "red_stars": 3.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "קמח שקדים",
+    "name_en": "Almond Flour",
+    "category": "fat", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס (~100 גרם)", "label_en": "1 cup (~100g)", "grams": 100, "yellow_stars": 5.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "3 כפות (~30 גרם)", "label_en": "3 tbsp (~30g)", "grams": 30, "yellow_stars": 1.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "קוביות גבינה צהובה",
+    "name_en": "Yellow Cheese Cubes",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "5 קוביות (~25 גרם)", "label_en": "5 cubes (~25g)", "grams": 25, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 2.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה מוצרלה",
+    "name_en": "Mozzarella Cheese",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "פרוסה (~30 גרם)", "label_en": "1 slice (~30g)", "grams": 30, "yellow_stars": 0.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 2.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינת פטה",
+    "name_en": "Feta Cheese",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "50 גרם", "label_en": "50g", "grams": 50, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 2.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גבינה ריקוטה 5%",
+    "name_en": "Ricotta Cheese 5%",
+    "category": "dairy", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.0, "red_stars": 0, "is_default": true, "sort_order": 1 }
+    ]
+  },
+  {
+    "name_he": "טונה בשמן זית",
+    "name_en": "Tuna in Olive Oil",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "פחית קטנה (~80 גרם)", "label_en": "Small can (~80g)", "grams": 80, "yellow_stars": 1.5, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 2.0, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "עוף שאורמה",
+    "name_en": "Chicken Shawarma (Spiced)",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~150 גרם)", "label_en": "1 serving (~150g)", "grams": 150, "yellow_stars": 2.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "סטייק בקר דק",
+    "name_en": "Thin Beef Steak",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~150 גרם)", "label_en": "1 serving (~150g)", "grams": 150, "yellow_stars": 2.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "בשר טחון עוף",
+    "name_en": "Ground Chicken",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~150 גרם)", "label_en": "1 serving (~150g)", "grams": 150, "yellow_stars": 2.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "דניס (דג ים)",
+    "name_en": "Sea Bream (Denise Fish)",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~150 גרם)", "label_en": "1 serving (~150g)", "grams": 150, "yellow_stars": 2.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "לוקוס (דג ים)",
+    "name_en": "Sea Bass (Locus Fish)",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "מנה (~150 גרם)", "label_en": "1 serving (~150g)", "grams": 150, "yellow_stars": 2.0, "red_stars": 0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם", "label_en": "100g", "grams": 100, "yellow_stars": 1.5, "red_stars": 0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "אורז בסמטי מבושל",
+    "name_en": "Cooked Basmati Rice",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0, "red_stars": 2.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "3 כפות יבש (~30 גרם)", "label_en": "3 tbsp dry (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "אורז יסמין מבושל",
+    "name_en": "Cooked Jasmine Rice",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0, "red_stars": 2.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "3 כפות יבש (~30 גרם)", "label_en": "3 tbsp dry (~30g)", "grams": 30, "yellow_stars": 0, "red_stars": 1.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "קינואה מבושלת",
+    "name_en": "Cooked Quinoa (Brand)",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0.5, "red_stars": 2.0, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 0.5, "red_stars": 1.0, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "פסטה פנה מלאה מבושלת",
+    "name_en": "Cooked Whole Wheat Penne",
+    "category": "carb", "star_type": "red", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 0, "red_stars": 2.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 0, "red_stars": 1.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "עדשים כתומות מבושלות",
+    "name_en": "Cooked Red Lentils",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~200 גרם)", "label_en": "1 cup cooked (~200g)", "grams": 200, "yellow_stars": 2.0, "red_stars": 0.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 1.0, "red_stars": 0.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "שעועית שחורה מבושלת",
+    "name_en": "Cooked Black Beans",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~175 גרם)", "label_en": "1 cup cooked (~175g)", "grams": 175, "yellow_stars": 2.5, "red_stars": 0.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 1.5, "red_stars": 0.5, "is_default": false, "sort_order": 2 }
+    ]
+  },
+  {
+    "name_he": "גרגרי חומוס מבושלים",
+    "name_en": "Cooked Chickpeas",
+    "category": "protein", "star_type": "yellow", "source": "manual",
+    "portions": [
+      { "label_he": "כוס מבושלת (~165 גרם)", "label_en": "1 cup cooked (~165g)", "grams": 165, "yellow_stars": 2.5, "red_stars": 0.5, "is_default": true, "sort_order": 1 },
+      { "label_he": "100 גרם מבושל", "label_en": "100g cooked", "grams": 100, "yellow_stars": 1.5, "red_stars": 0.5, "is_default": false, "sort_order": 2 }
+    ]
+  }
+]
