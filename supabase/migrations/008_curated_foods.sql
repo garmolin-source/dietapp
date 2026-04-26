@@ -4530,7 +4530,7 @@ FROM f, (VALUES
 -- [SNACK] Dark Chocolate
 WITH f AS (
   INSERT INTO public.foods (name_he, name_en, category, star_type, source)
-  VALUES ('שוקולד מריר', 'Dark Chocolate', 'snack', 'yellow', 'ai_agent')
+  VALUES ('שוקולד מריר', 'Dark Chocolate', 'snack', 'red', 'ai_agent')
   RETURNING id
 )
 INSERT INTO public.food_portions (food_id, label_he, label_en, grams, yellow_stars, red_stars, is_default, sort_order)
