@@ -6,8 +6,8 @@ import { createClient } from '@/lib/supabase/client'
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'בית' },
-  { href: '/foods', label: 'מזונות' },
-  { href: '/profile', label: 'פרופיל' },
+  { href: '/foods',     label: 'מזונות' },
+  { href: '/profile',   label: 'פרופיל' },
 ]
 
 export default function NavBar() {
@@ -22,10 +22,10 @@ export default function NavBar() {
   }
 
   return (
-    <nav className="bg-card border-b-2 border-border sticky top-0 z-10 shadow-soft">
+    <nav className="bg-primary sticky top-0 z-10 shadow-nav">
       <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/dashboard" className="font-display font-normal text-xl text-foreground tracking-wide">
-          ⭐ DietApp
+        <Link href="/dashboard" className="font-bold text-lg text-white tracking-wide">
+          מלאך הדיאטה
         </Link>
 
         <div className="flex items-center gap-1">
@@ -33,10 +33,10 @@ export default function NavBar() {
             <Link
               key={href}
               href={href}
-              className={`px-3 py-1.5 rounded-xl text-sm font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-pill text-sm font-semibold transition-colors ${
                 pathname === href
-                  ? 'bg-primary text-primary-fg'
-                  : 'text-muted-fg hover:text-foreground hover:bg-muted'
+                  ? 'bg-white text-primary'
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
               }`}
             >
               {label}
@@ -44,7 +44,7 @@ export default function NavBar() {
           ))}
           <button
             onClick={handleSignOut}
-            className="px-3 py-1.5 rounded-xl text-sm font-medium text-muted-fg hover:text-foreground hover:bg-muted transition-colors"
+            className="px-3 py-1.5 rounded-pill text-sm font-semibold text-white/60 hover:text-white hover:bg-white/10 transition-colors"
           >
             יציאה
           </button>

@@ -34,8 +34,8 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="max-w-md w-full space-y-8 p-8 bg-card rounded-2xl border-2 border-border shadow-elevated">
         <div className="text-center">
-          <h1 className="font-display font-normal text-4xl text-foreground">⭐ DietApp</h1>
-          <h2 className="mt-2 text-lg text-muted-fg">כניסה לחשבון</h2>
+          <h1 className="font-bold text-3xl text-foreground">מלאך הדיאטה</h1>
+          <h2 className="mt-2 text-base text-muted-fg">כניסה לחשבון</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">

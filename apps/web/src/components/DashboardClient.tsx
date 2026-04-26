@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import StarQuotaPanel from './StarQuotaPanel'
+import HeroRing from './HeroRing'
 import { getPortionVisualHint } from '@/lib/portionHint'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -311,105 +311,86 @@ export default function DashboardClient({
   const totalRed = logs.reduce((s, e) => s + (parseFloat(e.red_stars_consumed as any) || 0), 0)
   const isToday = selectedDate === today
 
+  // ── Derived values (for veggie free count) ────────────────────────────────
+
+  const freeCount = logs.filter(e =>
+    !parseFloat(e.yellow_stars_consumed as any) && !parseFloat(e.red_stars_consumed as any)
+  ).length
+
+  // ── Meal header tints ──────────────────────────────────────────────────────
+
+  const MEAL_TINT: Record<string, string> = {
+    breakfast: 'bg-mustard-bg',
+    snack:     'bg-leaf-bg',
+    lunch:     'bg-brick-bg',
+    dinner:    'bg-[#ead6c0]',
+  }
+
+  const MEAL_ICON: Record<string, string> = {
+    breakfast: '☀️',
+    snack:     '☁️',
+    lunch:     '🍽️',
+    dinner:    '🌙',
+  }
+
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
     <div className="space-y-4">
 
-      {/* ── Date navigator ── */}
-      <div className="bg-card rounded-2xl border-2 border-border shadow-card p-4 space-y-3">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => shiftDate(-1)}
-            disabled={addDays(selectedDate, -1) < createdAt}
-            className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-muted disabled:opacity-25 text-xl transition-colors text-foreground"
-          >›</button>
+      {/* ── Hero quota card ── */}
+      <div
+        className="rounded-card border border-border shadow-card overflow-hidden"
+        style={{ background: 'linear-gradient(180deg, #eddcc4 0%, #f6ece0 100%)' }}
+      >
+        <div className="p-4">
+          {/* Date navigator */}
+          <div className="relative flex items-center justify-center mb-4">
+            <div className="flex items-center gap-1" dir="ltr">
+              <button
+                onClick={() => shiftDate(-1)}
+                disabled={addDays(selectedDate, -1) < createdAt}
+                className="w-9 h-9 flex items-center justify-center rounded-pill bg-card border border-border hover:bg-muted disabled:opacity-25 text-xl transition-colors text-foreground shadow-soft"
+              >‹</button>
 
-          <div className="text-center">
-            <div className="font-medium text-foreground text-sm">{formatDateLong(selectedDate)}</div>
-            {!isToday && (
-              <button onClick={() => selectDate(today)} className="text-xs text-primary hover:underline mt-0.5">
-                חזור להיום
-              </button>
-            )}
-            {isToday && <div className="text-xs text-primary mt-0.5 font-medium">היום</div>}
-          </div>
+              <div className="text-center min-w-[150px]">
+                <div className="font-semibold text-foreground text-sm">{formatDateLong(selectedDate)}</div>
+                {!isToday && (
+                  <button onClick={() => selectDate(today)} className="text-xs text-mustard hover:underline mt-0.5 font-medium">
+                    חזור להיום
+                  </button>
+                )}
+                {isToday && <div className="text-xs text-mustard mt-0.5 font-semibold">היום</div>}
+              </div>
 
-          <button
-            onClick={() => shiftDate(1)}
-            className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-muted text-xl transition-colors text-foreground"
-          >‹</button>
-        </div>
+              <button
+                onClick={() => shiftDate(1)}
+                className="w-9 h-9 flex items-center justify-center rounded-pill bg-card border border-border hover:bg-muted text-xl transition-colors text-foreground shadow-soft"
+              >›</button>
+            </div>
 
-        {/* View mode switcher */}
-        <div className="flex gap-1 justify-center">
-          {(['day', 'week', 'month'] as const).map(mode => (
-            <button
-              key={mode}
-              onClick={() => setViewMode(mode)}
-              className={`px-4 py-1.5 rounded-xl text-sm font-medium transition-colors ${
-                viewMode === mode
-                  ? 'bg-primary text-primary-fg'
-                  : 'bg-muted text-muted-fg hover:text-foreground'
-              }`}
-            >
-              {mode === 'day' ? 'יום' : mode === 'week' ? 'שבוע' : 'חודש'}
-            </button>
-          ))}
-        </div>
-
-        {/* Week strip */}
-        {viewMode === 'week' && (
-          <div className="grid grid-cols-7 gap-1 pt-1">
-            {getWeekDays(selectedDate).map(day => {
-              const d = parseDate(day)
-              const isSelected = day === selectedDate
-              const isTodayDay = day === today
-              const isDisabled = day < createdAt
-              return (
+            <div className="absolute right-0 flex gap-1">
+              {(['day', 'week', 'month'] as const).map(mode => (
                 <button
-                  key={day}
-                  onClick={() => !isDisabled && selectDate(day)}
-                  disabled={isDisabled}
-                  className={`flex flex-col items-center py-2 rounded-xl transition-colors text-xs ${
-                    isSelected ? 'bg-primary text-primary-fg' :
-                    isTodayDay ? 'bg-secondary/40 border border-secondary text-foreground' :
-                    isDisabled ? 'opacity-25 cursor-not-allowed text-muted-fg' :
-                    'hover:bg-muted text-muted-fg'
+                  key={mode}
+                  onClick={() => setViewMode(mode)}
+                  className={`px-2.5 py-1 rounded-pill text-xs font-semibold transition-colors ${
+                    viewMode === mode
+                      ? 'bg-primary text-primary-fg'
+                      : 'bg-card/80 text-muted-fg hover:text-foreground border border-border'
                   }`}
                 >
-                  <span>{DAY_SHORT_HE[d.getDay()]}</span>
-                  <span className="font-semibold text-sm mt-0.5">{d.getDate()}</span>
+                  {mode === 'day' ? 'יום' : mode === 'week' ? 'שבוע' : 'חודש'}
                 </button>
-              )
-            })}
-          </div>
-        )}
-
-        {/* Month calendar */}
-        {viewMode === 'month' && (
-          <div className="pt-1">
-            <div className="flex items-center justify-between mb-2">
-              <button
-                onClick={() => setCalMonth(m => addMonths(m + '-01', -1).slice(0, 7))}
-                className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-muted text-lg text-foreground"
-              >›</button>
-              <span className="text-sm font-semibold text-foreground">
-                {MONTH_NAMES_HE[parseInt(calMonth.split('-')[1]) - 1]} {calMonth.split('-')[0]}
-              </span>
-              <button
-                onClick={() => setCalMonth(m => addMonths(m + '-01', 1).slice(0, 7))}
-                className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-muted text-lg text-foreground"
-              >‹</button>
-            </div>
-            <div className="grid grid-cols-7 text-center mb-1">
-              {DAY_SHORT_HE.map(d => (
-                <div key={d} className="text-xs text-muted-fg py-1">{d}</div>
               ))}
             </div>
-            <div className="grid grid-cols-7 gap-0.5">
-              {getMonthGrid(calMonth).map((day, i) => {
-                if (!day) return <div key={i} />
+          </div>
+
+          {/* Week strip */}
+          {viewMode === 'week' && (
+            <div className="grid grid-cols-7 gap-1 mb-4">
+              {getWeekDays(selectedDate).map(day => {
+                const d = parseDate(day)
                 const isSelected = day === selectedDate
                 const isTodayDay = day === today
                 const isDisabled = day < createdAt
@@ -418,26 +399,118 @@ export default function DashboardClient({
                     key={day}
                     onClick={() => !isDisabled && selectDate(day)}
                     disabled={isDisabled}
-                    className={`aspect-square flex items-center justify-center rounded-xl text-sm transition-colors ${
-                      isSelected ? 'bg-primary text-primary-fg font-bold' :
-                      isTodayDay ? 'bg-secondary/40 border border-secondary text-foreground font-semibold' :
-                      isDisabled ? 'opacity-20 cursor-not-allowed text-muted-fg' :
-                      'hover:bg-muted text-foreground'
+                    className={`flex flex-col items-center py-2 rounded-card transition-colors text-xs ${
+                      isSelected ? 'bg-primary text-primary-fg' :
+                      isTodayDay ? 'bg-mustard-bg border border-mustard text-foreground' :
+                      isDisabled ? 'opacity-25 cursor-not-allowed text-muted-fg' :
+                      'hover:bg-muted text-muted-fg'
                     }`}
                   >
-                    {parseDate(day).getDate()}
+                    <span>{DAY_SHORT_HE[d.getDay()]}</span>
+                    <span className="font-bold text-sm mt-0.5">{d.getDate()}</span>
                   </button>
                 )
               })}
             </div>
-          </div>
-        )}
-      </div>
+          )}
 
-      {/* ── Star quota ── */}
-      <div className="bg-card rounded-2xl border-2 border-border shadow-card p-4 space-y-4">
-        <h2 className="font-display font-normal text-lg text-foreground">מאזן כוכבים יומי</h2>
-        <StarQuotaPanel yellowUsed={totalYellow} redUsed={totalRed} totalQuota={totalQuota} />
+          {/* Month calendar */}
+          {viewMode === 'month' && (
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-2">
+                <button
+                  onClick={() => setCalMonth(m => addMonths(m + '-01', -1).slice(0, 7))}
+                  className="w-8 h-8 flex items-center justify-center rounded-pill bg-card border border-border hover:bg-muted text-lg text-foreground"
+                >›</button>
+                <span className="text-sm font-bold text-foreground">
+                  {MONTH_NAMES_HE[parseInt(calMonth.split('-')[1]) - 1]} {calMonth.split('-')[0]}
+                </span>
+                <button
+                  onClick={() => setCalMonth(m => addMonths(m + '-01', 1).slice(0, 7))}
+                  className="w-8 h-8 flex items-center justify-center rounded-pill bg-card border border-border hover:bg-muted text-lg text-foreground"
+                >‹</button>
+              </div>
+              <div className="grid grid-cols-7 text-center mb-1">
+                {DAY_SHORT_HE.map(d => (
+                  <div key={d} className="text-xs text-muted-fg py-1">{d}</div>
+                ))}
+              </div>
+              <div className="grid grid-cols-7 gap-0.5">
+                {getMonthGrid(calMonth).map((day, i) => {
+                  if (!day) return <div key={i} />
+                  const isSelected = day === selectedDate
+                  const isTodayDay = day === today
+                  const isDisabled = day < createdAt
+                  return (
+                    <button
+                      key={day}
+                      onClick={() => !isDisabled && selectDate(day)}
+                      disabled={isDisabled}
+                      className={`aspect-square flex items-center justify-center rounded-xl text-sm transition-colors ${
+                        isSelected ? 'bg-primary text-primary-fg font-bold' :
+                        isTodayDay ? 'bg-mustard-bg border border-mustard text-foreground font-semibold' :
+                        isDisabled ? 'opacity-20 cursor-not-allowed text-muted-fg' :
+                        'hover:bg-muted text-foreground'
+                      }`}
+                    >
+                      {parseDate(day).getDate()}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Hero ring + breakdown */}
+          <div className="bg-card rounded-card border border-border p-4">
+            <div className="flex flex-col items-center">
+              <HeroRing
+                yellowUsed={totalYellow}
+                redUsed={totalRed}
+                totalQuota={totalQuota}
+                redQuota={redQuota}
+                size={200}
+              />
+
+              {/* Breakdown chips */}
+              <div className="grid grid-cols-3 gap-2 w-full mt-4">
+                {/* Yellow / protein+fat */}
+                <div className="bg-mustard-bg rounded-chip p-2.5 text-center">
+                  <div className="text-[10px] font-bold text-foreground/80 leading-tight">חלבון·שומן</div>
+                  <div className="mt-1 text-lg font-bold text-mustard leading-none">
+                    {Math.round(totalYellow * 10) / 10}
+                    <span className="text-[10px] text-muted-fg font-semibold">/{Math.max(0, totalQuota - redQuota)}</span>
+                  </div>
+                </div>
+                {/* Red / carbs */}
+                <div className="bg-brick-bg rounded-chip p-2.5 text-center">
+                  <div className="text-[10px] font-bold text-foreground/80 leading-tight">פחמימות</div>
+                  <div className="mt-1 text-lg font-bold text-brick leading-none">
+                    {Math.round(totalRed * 10) / 10}
+                    <span className="text-[10px] text-muted-fg font-semibold">/{redQuota}</span>
+                  </div>
+                </div>
+                {/* Free / veggies */}
+                <div className="bg-leaf-bg rounded-chip p-2.5 text-center">
+                  <div className="text-[10px] font-bold text-foreground/80 leading-tight">ירקות חופשי</div>
+                  <div className="mt-1 text-lg font-bold text-leaf leading-none">{freeCount}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Red stars remaining strip */}
+          {redQuota - totalRed > 0 && (
+            <div className="mt-3 flex items-center gap-3 px-3 py-2.5 bg-mustard-bg rounded-chip border border-border-dk">
+              <div className="w-7 h-7 rounded-pill bg-mustard flex-shrink-0 flex items-center justify-center text-white text-sm">
+                🔴
+              </div>
+              <p className="text-sm text-foreground">
+                <span className="font-bold">{Math.round((redQuota - totalRed) * 10) / 10}</span> כוכבים אדומים נשארו לך להיום
+              </p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ── Meal sections ── */}
@@ -451,22 +524,41 @@ export default function DashboardClient({
           const isOpen = activeMeal === mealType
 
           return (
-            <div key={mealType} className="bg-card rounded-2xl border-2 border-border shadow-card overflow-hidden">
+            <div key={mealType} className="bg-card rounded-card border border-border shadow-card overflow-hidden">
 
               {/* Meal header */}
-              <div className="px-4 py-3 bg-party-header border-b-2 border-border flex items-center justify-between">
-                <h3 className="font-display font-normal text-lg text-foreground">{MEAL_LABELS[mealType]}</h3>
-                <div className="flex items-center gap-3">
-                  <div className="flex gap-2 text-sm">
-                    {mealYellow > 0 && <span className="text-star-yellow font-medium">⭐ {mealYellow}</span>}
-                    {mealRed > 0 && <span className="text-star-red font-medium">🔴 {mealRed}</span>}
+              <div className={`px-4 py-3 ${MEAL_TINT[mealType]} border-b border-border flex items-center justify-between`}>
+                <div className="flex items-center gap-2.5">
+                  <div className={`w-9 h-9 rounded-xl ${MEAL_TINT[mealType]} border border-border-dk flex items-center justify-center text-base`}>
+                    {MEAL_ICON[mealType]}
                   </div>
+                  <h3 className="font-bold text-base text-foreground">{MEAL_LABELS[mealType]}</h3>
+                </div>
+                <div className="flex items-center gap-2">
+                  {/* Meal star chips */}
+                  {(mealYellow > 0 || mealRed > 0) && (
+                    <div className="flex gap-1.5">
+                      {mealYellow > 0 && (
+                        <span className="px-2 py-0.5 rounded-pill bg-mustard-bg text-mustard text-xs font-bold">
+                          ★ {Math.round(mealYellow * 10) / 10}
+                        </span>
+                      )}
+                      {mealRed > 0 && (
+                        <span className="px-2 py-0.5 rounded-pill bg-brick-bg text-brick text-xs font-bold">
+                          ★ {Math.round(mealRed * 10) / 10}
+                        </span>
+                      )}
+                      {mealYellow === 0 && mealRed === 0 && entries.length > 0 && (
+                        <span className="px-2 py-0.5 rounded-pill bg-leaf-bg text-leaf text-xs font-bold">חופשי</span>
+                      )}
+                    </div>
+                  )}
                   <button
                     onClick={() => isOpen ? closeAdder() : openAdder(mealType)}
-                    className={`text-sm px-3 py-1.5 rounded-xl font-medium transition-colors ${
+                    className={`text-sm px-3 py-1.5 rounded-pill font-semibold transition-colors ${
                       isOpen
                         ? 'bg-muted text-muted-fg'
-                        : 'bg-primary hover:bg-primary/90 text-primary-fg'
+                        : 'bg-primary text-primary-fg hover:bg-primary/90'
                     }`}
                   >
                     {isOpen ? '✕ סגור' : '+ הוסף'}
@@ -477,64 +569,74 @@ export default function DashboardClient({
               {/* Log entries */}
               {entries.length > 0 && (
                 <div className="divide-y divide-border">
-                  {entries.map(entry => (
-                    <div key={entry.id} className="px-4 py-3 flex items-center justify-between">
-                      <div>
-                        <div className="font-medium text-foreground">{entry.food?.name_he}</div>
-                        <div className="text-sm text-muted-fg">
-                          {entry.portion?.label_he}
-                          {entry.quantity !== 1 && ` × ${entry.quantity}`}
+                  {entries.map(entry => {
+                    const yE = parseFloat(entry.yellow_stars_consumed as any) || 0
+                    const rE = parseFloat(entry.red_stars_consumed as any) || 0
+                    return (
+                      <div key={entry.id} className="px-4 py-3 flex items-center justify-between">
+                        <div className="min-w-0">
+                          <div className="font-semibold text-sm text-foreground">{entry.food?.name_he}</div>
+                          <div className="text-xs text-muted-fg mt-0.5">
+                            {entry.portion?.label_he}
+                            {entry.quantity !== 1 && ` × ${entry.quantity}`}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <div className="flex gap-1">
+                            {yE > 0 && (
+                              <span className="px-1.5 py-0.5 rounded-pill bg-mustard-bg text-mustard text-xs font-bold">★ {yE}</span>
+                            )}
+                            {rE > 0 && (
+                              <span className="px-1.5 py-0.5 rounded-pill bg-brick-bg text-brick text-xs font-bold">★ {rE}</span>
+                            )}
+                            {yE === 0 && rE === 0 && (
+                              <span className="px-1.5 py-0.5 rounded-pill bg-leaf-bg text-leaf text-xs font-bold">✓</span>
+                            )}
+                          </div>
+                          <button
+                            onClick={() => deleteEntry(entry.id)}
+                            className="w-6 h-6 rounded-pill text-muted-lo hover:text-brick transition-colors flex items-center justify-center text-xs"
+                          >✕</button>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="text-sm text-right">
-                          {parseFloat(entry.yellow_stars_consumed as any) > 0 && (
-                            <div className="text-star-yellow font-medium">⭐ {parseFloat(entry.yellow_stars_consumed as any)}</div>
-                          )}
-                          {parseFloat(entry.red_stars_consumed as any) > 0 && (
-                            <div className="text-star-red font-medium">🔴 {parseFloat(entry.red_stars_consumed as any)}</div>
-                          )}
-                          {!parseFloat(entry.yellow_stars_consumed as any) && !parseFloat(entry.red_stars_consumed as any) && (
-                            <div className="text-success text-xs font-medium">✓ חינם</div>
-                          )}
-                        </div>
-                        <button
-                          onClick={() => deleteEntry(entry.id)}
-                          className="text-muted-fg hover:text-destructive transition-colors"
-                        >✕</button>
-                      </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               )}
 
               {entries.length === 0 && !isOpen && (
-                <div className="px-4 py-5 text-center text-muted-fg text-sm">
-                  לא נוספו מזונות לארוחה זו
-                </div>
+                <button
+                  onClick={() => openAdder(mealType)}
+                  className="w-full px-4 py-4 text-center text-muted-fg text-sm border-none bg-transparent hover:bg-muted transition-colors cursor-pointer"
+                >
+                  + הוסף פריט לארוחה
+                </button>
               )}
 
               {/* ── Inline food adder ── */}
               {isOpen && (
-                <div className="border-t-2 border-border bg-background/60 p-4 space-y-3">
+                <div className="border-t border-border bg-background/60 p-4 space-y-3">
 
                   {/* Search input */}
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
-                    placeholder="חפש מזון (עברית או אנגלית)..."
-                    autoFocus
-                    className="w-full px-3 py-2.5 border-2 border-border rounded-xl text-sm bg-card focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary text-right text-foreground placeholder:text-muted-fg transition-colors"
-                  />
+                  <div className="flex items-center gap-2 bg-card border border-border rounded-pill px-3 py-2 shadow-soft">
+                    <span className="text-muted-fg text-sm">🔍</span>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={e => setSearchQuery(e.target.value)}
+                      placeholder="חפש מזון (עברית או אנגלית)..."
+                      autoFocus
+                      className="flex-1 text-sm bg-transparent focus:outline-none text-right text-foreground placeholder:text-muted-fg"
+                    />
+                  </div>
 
                   {/* Search results */}
                   {searchLoading && (
                     <div className="text-center text-muted-fg text-xs py-1">מחפש...</div>
                   )}
                   {searchResults.length > 0 && (
-                    <div className="bg-card border-2 border-border rounded-2xl divide-y divide-border shadow-soft overflow-hidden">
-                      <div className="max-h-48 overflow-y-auto">
+                    <div className="bg-card border border-border rounded-card shadow-soft overflow-hidden">
+                      <div className="max-h-48 overflow-y-auto divide-y divide-border">
                         {searchResults.map(food => {
                           const inCart = cart.some(c => c.food.id === food.id)
                           return (
@@ -542,66 +644,65 @@ export default function DashboardClient({
                               key={food.id}
                               onClick={() => inCart ? removeFromCart(food.id) : addToCart(food)}
                               className={`w-full text-right px-3 py-2.5 flex items-center justify-between transition-colors ${
-                                inCart ? 'bg-secondary/30' : 'hover:bg-muted'
+                                inCart ? 'bg-mustard-bg' : 'hover:bg-muted'
                               }`}
                             >
                               <div>
-                                <div className="text-sm font-medium text-foreground">{food.name_he}</div>
+                                <div className="text-sm font-semibold text-foreground">{food.name_he}</div>
                                 <div className="text-xs text-muted-fg">{food.name_en}</div>
                               </div>
-                              <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors ${
-                                inCart ? 'bg-primary border-primary' : 'border-border'
+                              <div className={`w-5 h-5 rounded-pill border-2 flex-shrink-0 flex items-center justify-center transition-colors ${
+                                inCart ? 'bg-mustard border-mustard' : 'border-border'
                               }`}>
-                                {inCart && <span className="text-primary-fg text-xs font-bold">✓</span>}
+                                {inCart && <span className="text-white text-xs font-bold">✓</span>}
                               </div>
                             </button>
                           )
                         })}
                       </div>
-                      {/* Escape hatch: trigger AI even when DB results exist */}
                       {!aiLoading && !aiResult && (
                         <button
                           onClick={() => runAiLookup('search', searchQuery)}
                           className="w-full text-xs text-muted-fg hover:text-foreground py-2 px-3 text-center hover:bg-muted transition-colors border-t border-border"
                         >
-                          לא מצאת את מה שחיפשת? 🔍 חפש ב-AI
+                          לא מצאת את מה שחיפשת? חפש ב-AI ✨
                         </button>
                       )}
                     </div>
                   )}
 
-                  {/* AI lookup result / loading — shown when no DB results OR user triggered AI manually */}
+                  {/* AI lookup result / loading */}
                   {searchQuery.length >= 2 && !searchLoading && (searchResults.length === 0 || aiLoading || aiResult || aiMode === 'describe') && (
                     <div className="space-y-2">
                       {aiLoading && (
-                        <div className="flex items-center gap-2 text-xs text-muted-fg bg-card border-2 border-border rounded-xl p-3">
+                        <div className="flex items-center gap-2 text-xs text-muted-fg bg-card border border-border rounded-card p-3">
                           <span className="animate-spin">⏳</span>
                           <span>מחפש מידע תזונתי ברשת...</span>
                         </div>
                       )}
 
                       {aiResult && !aiLoading && (
-                        <div className="bg-card border-2 border-primary/40 rounded-2xl p-3 space-y-2 shadow-soft">
+                        <div className="bg-card border border-mustard/30 rounded-card p-3 space-y-2 shadow-soft">
                           <div className="flex items-start justify-between gap-2">
                             <div>
-                              <div className="font-display font-normal text-base text-foreground">{aiResult.name_he}</div>
+                              <div className="font-bold text-base text-foreground">{aiResult.name_he}</div>
                               <div className="text-xs text-muted-fg">{aiResult.name_en}</div>
                             </div>
-                            <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${
-                              aiResult.star_type === 'yellow' ? 'bg-amber-100 text-amber-700' :
-                              aiResult.star_type === 'red' ? 'bg-red-100 text-red-700' :
-                              'bg-green-100 text-green-700'
+                            <span className={`text-xs px-2 py-0.5 rounded-pill font-bold flex-shrink-0 ${
+                              aiResult.star_type === 'yellow' ? 'bg-mustard-bg text-mustard' :
+                              aiResult.star_type === 'red' ? 'bg-brick-bg text-brick' :
+                              'bg-leaf-bg text-leaf'
                             }`}>
-                              {aiResult.star_type === 'yellow' ? '⭐ צהוב' :
-                               aiResult.star_type === 'red' ? '🔴 אדום' : '✓ חינם'}
+                              {aiResult.star_type === 'yellow' ? '★ צהוב' :
+                               aiResult.star_type === 'red' ? '★ אדום' : '✓ חינם'}
                             </span>
                           </div>
                           {aiResult.portions[0] && (
                             <div className="text-xs text-muted-fg">
                               {aiResult.portions[0].label_he} —{' '}
-                              {aiResult.portions[0].yellow_stars > 0 && <span className="text-star-yellow">⭐ {aiResult.portions[0].yellow_stars}</span>}
-                              {aiResult.portions[0].red_stars > 0 && <span className="text-star-red"> 🔴 {aiResult.portions[0].red_stars}</span>}
-                              {aiResult.portions[0].yellow_stars === 0 && aiResult.portions[0].red_stars === 0 && <span className="text-success">חינם</span>}
+                              {aiResult.portions[0].yellow_stars > 0 && <span className="text-mustard font-semibold">★ {aiResult.portions[0].yellow_stars}</span>}
+                              {aiResult.portions[0].red_stars > 0 && <span className="text-brick font-semibold"> ★ {aiResult.portions[0].red_stars}</span>}
+                              {aiResult.portions[0].yellow_stars === 0 && aiResult.portions[0].red_stars === 0 && <span className="text-leaf">חינם</span>}
                             </div>
                           )}
                           {aiResult.explanation && (
@@ -609,7 +710,7 @@ export default function DashboardClient({
                           )}
                           <button
                             onClick={addAiResultToCart}
-                            className="w-full text-sm py-2 bg-primary hover:bg-primary/90 text-primary-fg font-medium rounded-xl transition-colors"
+                            className="w-full text-sm py-2 bg-primary hover:bg-primary/90 text-primary-fg font-semibold rounded-pill transition-colors"
                           >
                             + הוסף לסל
                           </button>
@@ -617,35 +718,36 @@ export default function DashboardClient({
                       )}
 
                       {/* Describe with AI option */}
-                      <div className="border-2 border-dashed border-border rounded-2xl p-3 space-y-2">
-                        <p className="text-xs text-muted-fg text-center">או תאר את המזון שאכלת ו-AI יחשב את הכוכבים</p>
-                        {aiMode !== 'describe' ? (
+                      <button
+                        className="w-full flex items-center gap-3 bg-card border border-dashed border-border-dk rounded-card p-3 text-right hover:bg-muted transition-colors"
+                        onClick={() => aiMode !== 'describe' && setAiMode('describe')}
+                      >
+                        <div className="w-9 h-9 rounded-xl bg-mustard-bg flex-shrink-0 flex items-center justify-center text-mustard">✨</div>
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-foreground">לא מצאת? תאר ל-AI מה אכלת</div>
+                          <div className="text-xs text-muted-fg mt-0.5">"אכלתי שקשוקה עם 2 ביצים ופיתה"</div>
+                        </div>
+                      </button>
+
+                      {aiMode === 'describe' && (
+                        <div className="space-y-2">
+                          <textarea
+                            value={aiDescribe}
+                            onChange={e => setAiDescribe(e.target.value)}
+                            placeholder='למשל: "אכלתי שקשוקה עם 2 ביצים, רוטב עגבניות ופיתה"'
+                            rows={3}
+                            autoFocus
+                            className="w-full px-3 py-2 border border-border rounded-card text-sm bg-card focus:outline-none focus:ring-2 focus:ring-mustard/40 focus:border-mustard text-right text-foreground placeholder:text-muted-fg resize-none transition-colors"
+                          />
                           <button
-                            onClick={() => setAiMode('describe')}
-                            className="w-full text-sm py-2 bg-secondary hover:bg-accent text-foreground font-medium rounded-xl transition-colors"
+                            onClick={() => runAiLookup('describe', aiDescribe)}
+                            disabled={aiDescribe.trim().length < 3 || aiLoading}
+                            className="w-full text-sm py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-40 text-primary-fg font-semibold rounded-pill transition-colors"
                           >
-                            🤖 תאר עם AI
+                            {aiLoading ? '⏳ מחשב...' : 'קבל דירוג כוכבים'}
                           </button>
-                        ) : (
-                          <div className="space-y-2">
-                            <textarea
-                              value={aiDescribe}
-                              onChange={e => setAiDescribe(e.target.value)}
-                              placeholder='למשל: "אכלתי שקשוקה עם 2 ביצים, רוטב עגבניות ופיתה"'
-                              rows={3}
-                              autoFocus
-                              className="w-full px-3 py-2 border-2 border-border rounded-xl text-sm bg-card focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary text-right text-foreground placeholder:text-muted-fg resize-none transition-colors"
-                            />
-                            <button
-                              onClick={() => runAiLookup('describe', aiDescribe)}
-                              disabled={aiDescribe.trim().length < 3 || aiLoading}
-                              className="w-full text-sm py-2 bg-primary hover:bg-primary/90 disabled:opacity-40 text-primary-fg font-medium rounded-xl transition-colors"
-                            >
-                              {aiLoading ? '⏳ מחשב...' : 'קבל דירוג כוכבים'}
-                            </button>
-                          </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -656,7 +758,7 @@ export default function DashboardClient({
                   {/* Cart */}
                   {cart.length > 0 && (
                     <div className="space-y-2">
-                      <p className="text-xs font-medium text-muted-fg">
+                      <p className="text-xs font-semibold text-muted-fg">
                         {cart.length} {cart.length === 1 ? 'פריט נבחר' : 'פריטים נבחרו'}:
                       </p>
 
@@ -664,19 +766,19 @@ export default function DashboardClient({
                         const yStars = parseFloat(item.portion.yellow_stars) * item.quantity
                         const rStars = parseFloat(item.portion.red_stars) * item.quantity
                         return (
-                          <div key={item.food.id} className="bg-card rounded-2xl border-2 border-border p-3 space-y-2 shadow-soft">
+                          <div key={item.food.id} className="bg-card rounded-card border border-border p-3 space-y-2 shadow-soft">
                             <div className="flex items-center justify-between">
-                              <span className="text-sm font-semibold text-foreground">{item.food.name_he}</span>
+                              <span className="text-sm font-bold text-foreground">{item.food.name_he}</span>
                               <button
                                 onClick={() => removeFromCart(item.food.id)}
-                                className="text-muted-fg hover:text-destructive transition-colors text-sm"
+                                className="text-muted-lo hover:text-brick transition-colors text-sm w-6 h-6 flex items-center justify-center"
                               >✕</button>
                             </div>
                             <div className="flex items-center gap-2">
                               <select
                                 value={item.portion.id}
                                 onChange={e => updateCartPortion(item.food.id, e.target.value)}
-                                className="flex-1 text-sm border-2 border-border rounded-xl px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary bg-background text-foreground"
+                                className="flex-1 text-sm border border-border rounded-xl px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-mustard bg-background text-foreground"
                               >
                                 {item.food.portions?.map((p: any) => (
                                   <option key={p.id} value={p.id}>{p.label_he}</option>
@@ -685,12 +787,12 @@ export default function DashboardClient({
                               <div className="flex items-center gap-1.5 flex-shrink-0">
                                 <button
                                   onClick={() => updateCartQty(item.food.id, -0.5)}
-                                  className="w-7 h-7 bg-muted rounded-full text-base font-bold hover:bg-border flex items-center justify-center text-foreground transition-colors"
+                                  className="w-7 h-7 bg-muted rounded-pill hover:bg-border flex items-center justify-center text-foreground transition-colors font-bold"
                                 >−</button>
-                                <span className="text-sm font-semibold w-5 text-center text-foreground">{item.quantity}</span>
+                                <span className="text-sm font-bold w-5 text-center text-foreground">{item.quantity}</span>
                                 <button
                                   onClick={() => updateCartQty(item.food.id, 0.5)}
-                                  className="w-7 h-7 bg-muted rounded-full text-base font-bold hover:bg-border flex items-center justify-center text-foreground transition-colors"
+                                  className="w-7 h-7 bg-primary rounded-pill flex items-center justify-center text-white transition-colors font-bold"
                                 >+</button>
                               </div>
                             </div>
@@ -699,24 +801,24 @@ export default function DashboardClient({
                                 {getPortionVisualHint(item.food.category, item.portion.grams)}
                               </p>
                             )}
-                            <div className="text-xs">
-                              {yStars > 0 && <span className="text-star-yellow font-medium ml-2">⭐ {yStars}</span>}
-                              {rStars > 0 && <span className="text-star-red font-medium">🔴 {rStars}</span>}
-                              {yStars === 0 && rStars === 0 && <span className="text-success font-medium">✓ חינם</span>}
+                            <div className="flex gap-1.5 text-xs mt-1">
+                              {yStars > 0 && <span className="px-1.5 py-0.5 rounded-pill bg-mustard-bg text-mustard font-bold">★ {yStars}</span>}
+                              {rStars > 0 && <span className="px-1.5 py-0.5 rounded-pill bg-brick-bg text-brick font-bold">★ {rStars}</span>}
+                              {yStars === 0 && rStars === 0 && <span className="px-1.5 py-0.5 rounded-pill bg-leaf-bg text-leaf font-bold">✓ חינם</span>}
                             </div>
                           </div>
                         )
                       })}
 
                       {saveError && (
-                        <p className="text-xs text-destructive text-center">{saveError}</p>
+                        <p className="text-xs text-brick text-center">{saveError}</p>
                       )}
                       <button
                         onClick={saveCart}
                         disabled={saving}
-                        className="w-full py-3 bg-primary hover:bg-primary/90 text-primary-fg font-semibold rounded-2xl transition-colors text-sm disabled:opacity-50"
+                        className="w-full py-3 bg-primary hover:bg-primary/90 text-primary-fg font-bold rounded-pill transition-colors text-sm disabled:opacity-50"
                       >
-                        {saving ? 'שומר...' : `הוסף ${cart.length} ${cart.length === 1 ? 'פריט' : 'פריטים'} לרשומות`}
+                        {saving ? 'שומר...' : `רשום ${cart.length} ${cart.length === 1 ? 'פריט' : 'פריטים'}`}
                       </button>
                     </div>
                   )}

@@ -9,31 +9,58 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: 'hsl(160 50% 22% / <alpha-value>)',
-        'primary-fg': 'hsl(38 40% 95% / <alpha-value>)',
-        background: 'hsl(38 40% 95% / <alpha-value>)',
-        foreground: 'hsl(160 30% 10% / <alpha-value>)',
-        card: 'hsl(38 35% 97% / <alpha-value>)',
-        secondary: 'hsl(270 40% 88% / <alpha-value>)',
-        accent: 'hsl(270 40% 82% / <alpha-value>)',
-        muted: 'hsl(38 25% 90% / <alpha-value>)',
-        'muted-fg': 'hsl(160 15% 42% / <alpha-value>)',
+        // Brand / nav
+        primary:    '#2b1f16',
+        'primary-fg': '#ffffff',
+
+        // Page surfaces
+        background: '#f6ece0',
+        'bg-deep':  '#eddcc4',
+        foreground: '#2b1f16',
+        card:       '#ffffff',
+
+        // Muted
+        muted:      '#ecdcc8',
+        'muted-fg': '#8a7463',
+        'muted-lo': '#b9a891',
+
+        // Lines
+        border:     '#ecdcc8',
+        'border-dk': '#e2cfb4',
+
+        // Star types
+        mustard:      '#c89029',
+        'mustard-bg': '#f7e4b6',
+        brick:        '#b14a33',
+        'brick-bg':   '#f7d9cf',
+        leaf:         '#6b8a4d',
+        'leaf-bg':    '#e3ecd2',
+
+        // Semantic
         destructive: 'hsl(0 65% 50% / <alpha-value>)',
-        success: 'hsl(160 50% 38% / <alpha-value>)',
-        border: 'hsl(38 20% 85% / <alpha-value>)',
-        'party-header': '#F0D7FF',
-        'star-yellow': '#F59E0B',
-        'star-red': '#EF4444',
+        success:     '#6b8a4d',
+
+        // Legacy aliases kept for pages not yet updated
+        'star-yellow': '#c89029',
+        'star-red':    '#b14a33',
+        secondary:   '#e3ecd2',
+        accent:      '#d4e8b8',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'EB Garamond', 'Georgia', 'serif'],
-        body: ['var(--font-body)', 'Figtree', 'system-ui', 'sans-serif'],
-        sans: ['var(--font-body)', 'Figtree', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'Assistant', 'system-ui', 'sans-serif'],
+        body:    ['var(--font-body)',    'Assistant', 'system-ui', 'sans-serif'],
+        sans:    ['var(--font-body)',    'Assistant', 'system-ui', 'sans-serif'],
+      },
+      borderRadius: {
+        card: '22px',
+        chip: '14px',
+        pill: '999px',
       },
       boxShadow: {
-        soft: '0 2px 8px -2px hsl(160 30% 10% / 0.08)',
-        card: '0 4px 12px -4px hsl(160 30% 10% / 0.12)',
-        elevated: '0 8px 24px -8px hsl(160 30% 10% / 0.18)',
+        soft:     '0 2px 8px -2px rgba(43,31,22,0.08)',
+        card:     '0 4px 12px -4px rgba(43,31,22,0.10)',
+        elevated: '0 8px 24px -8px rgba(43,31,22,0.16)',
+        nav:      '0 12px 30px rgba(43,31,22,0.28), 0 2px 6px rgba(43,31,22,0.12)',
       },
     },
   },
