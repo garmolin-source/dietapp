@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import StarQuotaBar from './StarQuotaBar'
+import StarQuotaPanel from './StarQuotaPanel'
+import { getPortionVisualHint } from '@/lib/portionHint'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -436,8 +437,7 @@ export default function DashboardClient({
       {/* ── Star quota ── */}
       <div className="bg-card rounded-2xl border-2 border-border shadow-card p-4 space-y-4">
         <h2 className="font-display font-normal text-lg text-foreground">מאזן כוכבים יומי</h2>
-        <StarQuotaBar type="total" label="סה״כ כוכבים" used={totalYellow + totalRed} quota={totalQuota} />
-        <StarQuotaBar type="red" label="כוכבים אדומים (פחמימות)" used={totalRed} quota={redQuota} />
+        <StarQuotaPanel yellowUsed={totalYellow} redUsed={totalRed} totalQuota={totalQuota} />
       </div>
 
       {/* ── Meal sections ── */}
@@ -533,34 +533,45 @@ export default function DashboardClient({
                     <div className="text-center text-muted-fg text-xs py-1">מחפש...</div>
                   )}
                   {searchResults.length > 0 && (
-                    <div className="bg-card border-2 border-border rounded-2xl divide-y divide-border max-h-48 overflow-y-auto shadow-soft">
-                      {searchResults.map(food => {
-                        const inCart = cart.some(c => c.food.id === food.id)
-                        return (
-                          <button
-                            key={food.id}
-                            onClick={() => inCart ? removeFromCart(food.id) : addToCart(food)}
-                            className={`w-full text-right px-3 py-2.5 flex items-center justify-between transition-colors ${
-                              inCart ? 'bg-secondary/30' : 'hover:bg-muted'
-                            }`}
-                          >
-                            <div>
-                              <div className="text-sm font-medium text-foreground">{food.name_he}</div>
-                              <div className="text-xs text-muted-fg">{food.name_en}</div>
-                            </div>
-                            <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors ${
-                              inCart ? 'bg-primary border-primary' : 'border-border'
-                            }`}>
-                              {inCart && <span className="text-primary-fg text-xs font-bold">✓</span>}
-                            </div>
-                          </button>
-                        )
-                      })}
+                    <div className="bg-card border-2 border-border rounded-2xl divide-y divide-border shadow-soft overflow-hidden">
+                      <div className="max-h-48 overflow-y-auto">
+                        {searchResults.map(food => {
+                          const inCart = cart.some(c => c.food.id === food.id)
+                          return (
+                            <button
+                              key={food.id}
+                              onClick={() => inCart ? removeFromCart(food.id) : addToCart(food)}
+                              className={`w-full text-right px-3 py-2.5 flex items-center justify-between transition-colors ${
+                                inCart ? 'bg-secondary/30' : 'hover:bg-muted'
+                              }`}
+                            >
+                              <div>
+                                <div className="text-sm font-medium text-foreground">{food.name_he}</div>
+                                <div className="text-xs text-muted-fg">{food.name_en}</div>
+                              </div>
+                              <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors ${
+                                inCart ? 'bg-primary border-primary' : 'border-border'
+                              }`}>
+                                {inCart && <span className="text-primary-fg text-xs font-bold">✓</span>}
+                              </div>
+                            </button>
+                          )
+                        })}
+                      </div>
+                      {/* Escape hatch: trigger AI even when DB results exist */}
+                      {!aiLoading && !aiResult && (
+                        <button
+                          onClick={() => runAiLookup('search', searchQuery)}
+                          className="w-full text-xs text-muted-fg hover:text-foreground py-2 px-3 text-center hover:bg-muted transition-colors border-t border-border"
+                        >
+                          לא מצאת את מה שחיפשת? 🔍 חפש ב-AI
+                        </button>
+                      )}
                     </div>
                   )}
 
-                  {/* No DB results — show AI lookup result or loading */}
-                  {searchQuery.length >= 2 && !searchLoading && searchResults.length === 0 && (
+                  {/* AI lookup result / loading — shown when no DB results OR user triggered AI manually */}
+                  {searchQuery.length >= 2 && !searchLoading && (searchResults.length === 0 || aiLoading || aiResult || aiMode === 'describe') && (
                     <div className="space-y-2">
                       {aiLoading && (
                         <div className="flex items-center gap-2 text-xs text-muted-fg bg-card border-2 border-border rounded-xl p-3">
@@ -683,6 +694,11 @@ export default function DashboardClient({
                                 >+</button>
                               </div>
                             </div>
+                            {getPortionVisualHint(item.food.category, item.portion.grams) && (
+                              <p className="text-xs text-muted-fg mt-0.5">
+                                {getPortionVisualHint(item.food.category, item.portion.grams)}
+                              </p>
+                            )}
                             <div className="text-xs">
                               {yStars > 0 && <span className="text-star-yellow font-medium ml-2">⭐ {yStars}</span>}
                               {rStars > 0 && <span className="text-star-red font-medium">🔴 {rStars}</span>}

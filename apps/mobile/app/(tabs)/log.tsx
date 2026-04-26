@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
 import { supabase } from '@/lib/supabase'
+import { getPortionVisualHint } from '@/src/lib/portionHint'
 
 type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack'
 
@@ -173,6 +174,14 @@ export default function LogScreen() {
                     <Text style={[styles.portionText, selectedPortion?.id === p.id && styles.portionTextActive]}>
                       {p.label_he}
                     </Text>
+                    {(() => {
+                      const hint = getPortionVisualHint(selectedFood.category, p.grams)
+                      return hint ? (
+                        <Text style={[styles.portionHint, selectedPortion?.id === p.id && styles.portionHintActive]}>
+                          {hint}
+                        </Text>
+                      ) : null
+                    })()}
                   </TouchableOpacity>
                 ))}
               </ScrollView>
@@ -292,6 +301,8 @@ const styles = StyleSheet.create({
   portionChipActive: { backgroundColor: '#FEF3C7', borderWidth: 1, borderColor: '#F59E0B' },
   portionText: { color: '#374151', fontSize: 14 },
   portionTextActive: { color: '#D97706', fontWeight: '600' },
+  portionHint: { color: '#9CA3AF', fontSize: 11, marginTop: 2 },
+  portionHintActive: { color: '#B45309' },
   quantityRow: { flexDirection: 'row', alignItems: 'center', gap: 16, marginTop: 4 },
   qtyBtn: {
     width: 36,

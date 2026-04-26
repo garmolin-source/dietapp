@@ -25,6 +25,7 @@ export default function ProfilePage() {
   const [redQuota, setRedQuota] = useState('3')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const [email, setEmail] = useState('')
   const supabase = createClient()
 
@@ -69,11 +70,12 @@ export default function ProfilePage() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault()
     setSaving(true)
+    setSaveError(null)
 
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) { setSaving(false); return }
 
-    await supabase.from('user_profiles').upsert({
+    const { error } = await supabase.from('user_profiles').upsert({
       id: user.id,
       display_name: displayName,
       weight_kg: parseFloat(weightKg) || null,
@@ -84,6 +86,10 @@ export default function ProfilePage() {
     })
 
     setSaving(false)
+    if (error) {
+      setSaveError(error.message)
+      return
+    }
     setSaved(true)
     setTimeout(() => setSaved(false), 3000)
   }
@@ -102,6 +108,11 @@ export default function ProfilePage() {
           {saved && (
             <div className="bg-green-50 text-success p-3 rounded-xl text-sm border border-green-200">
               ✓ הפרופיל נשמר בהצלחה
+            </div>
+          )}
+          {saveError && (
+            <div className="bg-red-50 text-destructive p-3 rounded-xl text-sm border border-red-200" dir="ltr">
+              שגיאה: {saveError}
             </div>
           )}
 

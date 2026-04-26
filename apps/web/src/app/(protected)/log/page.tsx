@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { getPortionVisualHint } from '@/lib/portionHint'
 
 type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack'
 
@@ -81,6 +82,9 @@ export default function LogPage() {
 
   const yellowStars = selectedPortion ? selectedPortion.yellow_stars * quantity : 0
   const redStars = selectedPortion ? selectedPortion.red_stars * quantity : 0
+  const portionHint = (selectedFood && selectedPortion)
+    ? getPortionVisualHint(selectedFood.category, selectedPortion.grams)
+    : null
 
   return (
     <div className="space-y-6">
@@ -180,6 +184,9 @@ export default function LogPage() {
                   </option>
                 ))}
               </select>
+              {portionHint && (
+                <p className="mt-1 text-sm text-gray-500">{portionHint}</p>
+              )}
             </div>
 
             <div>
