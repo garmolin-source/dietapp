@@ -132,7 +132,10 @@ export default function DashboardClient({
   const [mealError, setMealError] = useState<string | null>(null)
   const runMealParseRef = useRef<(d: string) => void>()
 
-  const voice = useVoiceInput({ lang: 'he-IL' })
+  const voice = useVoiceInput({
+    lang: 'he-IL',
+    onFinalTranscript: (t) => runMealParseRef.current?.(t),
+  })
 
   // ── Data fetching ──────────────────────────────────────────────────────────
 
@@ -708,11 +711,11 @@ export default function DashboardClient({
                   {/* ── Voice panel (primary) ── */}
                   <div className="bg-card border border-border rounded-card p-4 space-y-3">
 
-                    {/* Step 1: Mic button */}
-                    {(voice.state === 'idle' || voice.state === 'listening') && mealItems.length === 0 && (
+                    {/* Idle / listening: mic button */}
+                    {!mealParsing && mealItems.length === 0 && (
                       <>
                         <p className="text-xs font-semibold text-muted-fg text-center">
-                          {voice.state === 'listening' ? 'מקשיב... לחץ ⏹ לעצור' : 'דבר — מה אכלת?'}
+                          {voice.state === 'listening' ? 'מקשיב... לחץ ⏹ לסיום' : 'דבר — מה אכלת?'}
                         </p>
                         <div className="flex justify-center">
                           <button
@@ -726,63 +729,40 @@ export default function DashboardClient({
                             {voice.state === 'listening' ? '⏹' : '🎙️'}
                           </button>
                         </div>
-
-                        {/* Live transcript while listening */}
-                        {voice.state === 'listening' && (voice.transcript || voice.interimTranscript) && (
-                          <div className="bg-muted rounded-xl px-3 py-2 text-sm text-foreground text-right min-h-[40px] leading-relaxed">
+                        {/* Live transcript */}
+                        {(voice.transcript || voice.interimTranscript) && (
+                          <div className="bg-muted rounded-xl px-3 py-2 text-sm text-foreground text-right leading-relaxed">
                             <span>{voice.transcript}</span>
                             <span className="text-muted-fg"> {voice.interimTranscript}</span>
                           </div>
                         )}
-
-                        {voice.state === 'idle' && (
+                        {voice.state === 'idle' && !voice.transcript && (
                           <p className="text-xs text-muted-fg text-center">
                             {voice.supported ? 'לחץ על המיקרופון ותאר מה אכלת' : 'זיהוי קול לא נתמך — השתמש בחיפוש טקסט למטה'}
                           </p>
                         )}
                         {voice.error && <p className="text-xs text-brick text-center">{voice.error}</p>}
+                        {mealError && (
+                          <div className="text-xs text-brick text-center space-y-1">
+                            <p>{mealError}</p>
+                            <button onClick={() => { setMealError(null); voice.reset() }} className="underline">נסה שוב</button>
+                          </div>
+                        )}
                       </>
                     )}
 
-                    {/* Step 2: Editable transcript + Analyze button */}
-                    {voice.state === 'done' && mealItems.length === 0 && !mealParsing && (
-                      <>
-                        <p className="text-xs font-semibold text-muted-fg text-center">בדוק ותקן אם צריך, אז לחץ נתח</p>
-                        <textarea
-                          value={voice.transcript}
-                          onChange={e => voice.setTranscript(e.target.value)}
-                          rows={3}
-                          className="w-full px-3 py-2 border border-border rounded-xl text-sm bg-background text-foreground text-right focus:outline-none focus:ring-2 focus:ring-mustard/40 focus:border-mustard resize-none"
-                        />
-                        <div className="flex gap-2">
-                          <button
-                            onClick={voice.reset}
-                            className="px-4 py-2.5 border border-border rounded-pill text-sm font-semibold text-foreground hover:bg-muted transition-colors"
-                          >
-                            מחק
-                          </button>
-                          <button
-                            onClick={() => runMealParseRef.current?.(voice.transcript)}
-                            disabled={!voice.transcript.trim()}
-                            className="flex-1 py-2.5 bg-primary text-white rounded-pill text-sm font-bold hover:bg-primary/90 disabled:opacity-40 transition-colors"
-                          >
-                            נתח ארוחה ✨
-                          </button>
-                        </div>
-                      </>
-                    )}
-
-                    {/* Step 2b: Parsing spinner */}
+                    {/* Parsing spinner */}
                     {mealParsing && (
-                      <div className="flex flex-col items-center gap-2 py-2">
-                        <div className="text-2xl animate-spin">⏳</div>
+                      <div className="flex flex-col items-center gap-2 py-4">
+                        <div className="w-10 h-10 border-4 border-mustard border-t-transparent rounded-full animate-spin" />
                         <p className="text-xs text-muted-fg">מנתח ארוחה...</p>
+                        {voice.transcript && (
+                          <p className="text-xs text-muted-fg text-center px-2 italic">"{voice.transcript}"</p>
+                        )}
                       </div>
                     )}
 
-                    {mealError && <p className="text-xs text-brick text-center">{mealError}</p>}
-
-                    {/* Step 3: Item review list */}
+                    {/* Item review list */}
                     {mealItems.length > 0 && !mealParsing && (
                       <div className="space-y-2">
                         <p className="text-xs font-semibold text-muted-fg">זוהו {mealItems.length} פריטים:</p>

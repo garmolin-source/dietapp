@@ -6,27 +6,28 @@ export type VoiceState = 'idle' | 'listening' | 'done' | 'error'
 
 interface UseVoiceInputOptions {
   lang?: string
+  onFinalTranscript?: (transcript: string) => void
 }
 
-export function useVoiceInput({ lang = 'he-IL' }: UseVoiceInputOptions = {}) {
+export function useVoiceInput({ lang = 'he-IL', onFinalTranscript }: UseVoiceInputOptions = {}) {
   const [state, setState] = useState<VoiceState>('idle')
   const [transcript, setTranscript] = useState('')
   const [interimTranscript, setInterimTranscript] = useState('')
   const [error, setError] = useState<string | null>(null)
 
   const recognitionRef = useRef<any>(null)
-  const finalRef = useRef('')      // finalized words
-  const interimRef = useRef('')    // in-progress words
+  const finalRef = useRef('')
+  const interimRef = useRef('')
   const stoppedRef = useRef(false)
+  const callbackRef = useRef(onFinalTranscript)
+  callbackRef.current = onFinalTranscript
 
   const supported = typeof window !== 'undefined' &&
     ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)
 
   const stop = useCallback(() => {
     stoppedRef.current = true
-    if (recognitionRef.current) {
-      recognitionRef.current.stop()
-    }
+    if (recognitionRef.current) recognitionRef.current.stop()
   }, [])
 
   const start = useCallback(() => {
@@ -70,12 +71,12 @@ export function useVoiceInput({ lang = 'he-IL' }: UseVoiceInputOptions = {}) {
     recognition.onend = () => {
       setInterimTranscript('')
       if (stoppedRef.current) {
-        // Combine final + any interim that wasn't finalized before stop
         const combined = (finalRef.current + ' ' + interimRef.current).trim()
         setTranscript(combined)
         setState('done')
+        if (combined) callbackRef.current?.(combined)
       } else {
-        // Browser ended on its own through a pause — restart to keep listening
+        // Browser paused on its own — restart to keep listening
         try { recognition.start() } catch {}
       }
     }
@@ -108,5 +109,5 @@ export function useVoiceInput({ lang = 'he-IL' }: UseVoiceInputOptions = {}) {
     return () => { if (recognitionRef.current) recognitionRef.current.abort() }
   }, [])
 
-  return { state, transcript, interimTranscript, error, supported, start, stop, reset, setTranscript }
+  return { state, transcript, interimTranscript, error, supported, start, stop, reset }
 }

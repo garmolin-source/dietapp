@@ -98,8 +98,14 @@ Return ONLY the JSON, no markdown.`
     }))
 
     return NextResponse.json(result)
-  } catch (err) {
+  } catch (err: any) {
     console.error('[ai-meal]', err)
-    return NextResponse.json({ error: 'Meal parse failed' }, { status: 500 })
+    const msg = err?.message ?? 'Unknown error'
+    const isKeyMissing = !process.env.ANTHROPIC_API_KEY
+    return NextResponse.json({
+      error: isKeyMissing
+        ? 'ANTHROPIC_API_KEY is not set in environment variables'
+        : `Meal parse failed: ${msg}`,
+    }, { status: 500 })
   }
 }
