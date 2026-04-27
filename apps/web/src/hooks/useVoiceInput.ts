@@ -2,30 +2,28 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react'
 
-export type VoiceState = 'idle' | 'listening' | 'processing' | 'done' | 'error'
+export type VoiceState = 'idle' | 'listening' | 'done' | 'error'
 
 interface UseVoiceInputOptions {
   lang?: string
-  onFinalTranscript?: (transcript: string) => void
 }
 
-export function useVoiceInput({
-  lang = 'he-IL',
-  onFinalTranscript,
-}: UseVoiceInputOptions = {}) {
+export function useVoiceInput({ lang = 'he-IL' }: UseVoiceInputOptions = {}) {
   const [state, setState] = useState<VoiceState>('idle')
   const [transcript, setTranscript] = useState('')
   const [interimTranscript, setInterimTranscript] = useState('')
   const [error, setError] = useState<string | null>(null)
+
   const recognitionRef = useRef<any>(null)
-  const finalTranscriptRef = useRef('')
-  const stoppedByUserRef = useRef(false)
+  const finalRef = useRef('')      // finalized words
+  const interimRef = useRef('')    // in-progress words
+  const stoppedRef = useRef(false)
 
   const supported = typeof window !== 'undefined' &&
     ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)
 
   const stop = useCallback(() => {
-    stoppedByUserRef.current = true
+    stoppedRef.current = true
     if (recognitionRef.current) {
       recognitionRef.current.stop()
     }
@@ -38,76 +36,68 @@ export function useVoiceInput({
       return
     }
 
-    finalTranscriptRef.current = ''
-    stoppedByUserRef.current = false
+    finalRef.current = ''
+    interimRef.current = ''
+    stoppedRef.current = false
     setTranscript('')
     setInterimTranscript('')
     setError(null)
     setState('listening')
 
-    const SpeechRecognition = (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition
-    const recognition = new SpeechRecognition()
+    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    const recognition = new SR()
     recognitionRef.current = recognition
-
     recognition.lang = lang
     recognition.interimResults = true
     recognition.maxAlternatives = 1
-    recognition.continuous = true  // keep listening through pauses
+    recognition.continuous = true
 
     recognition.onresult = (event: any) => {
       let interim = ''
       for (let i = event.resultIndex; i < event.results.length; i++) {
-        const result = event.results[i]
-        if (result.isFinal) {
-          finalTranscriptRef.current += result[0].transcript + ' '
-          setTranscript(finalTranscriptRef.current.trim())
-          setInterimTranscript('')
+        const r = event.results[i]
+        if (r.isFinal) {
+          finalRef.current += r[0].transcript + ' '
         } else {
-          interim += result[0].transcript
+          interim += r[0].transcript
         }
       }
+      interimRef.current = interim
+      setTranscript(finalRef.current.trim())
       setInterimTranscript(interim)
     }
 
     recognition.onend = () => {
       setInterimTranscript('')
-      // Only fire callback when user explicitly stopped
-      if (stoppedByUserRef.current) {
-        const final = finalTranscriptRef.current.trim()
-        setState('processing')
-        if (final && onFinalTranscript) {
-          onFinalTranscript(final)
-        }
+      if (stoppedRef.current) {
+        // Combine final + any interim that wasn't finalized before stop
+        const combined = (finalRef.current + ' ' + interimRef.current).trim()
+        setTranscript(combined)
+        setState('done')
       } else {
-        // Browser ended on its own (e.g. network hiccup) — restart automatically
-        if (recognitionRef.current && state !== 'idle') {
-          try { recognition.start() } catch {}
-        }
+        // Browser ended on its own through a pause — restart to keep listening
+        try { recognition.start() } catch {}
       }
     }
 
     recognition.onerror = (event: any) => {
-      // Ignore no-speech — with continuous=true this just means a pause
-      if (event.error === 'no-speech') return
+      if (event.error === 'no-speech' || event.error === 'aborted') return
       if (event.error === 'not-allowed') {
         setError('גישה למיקרופון נדחתה. אפשר גישה בהגדרות הדפדפן.')
-        setState('error')
-      } else if (event.error !== 'aborted') {
+      } else {
         setError('שגיאה בזיהוי קול: ' + event.error)
-        setState('error')
       }
+      setState('error')
     }
 
     recognition.start()
-  }, [supported, lang, onFinalTranscript])
+  }, [supported, lang])
 
   const reset = useCallback(() => {
-    stoppedByUserRef.current = true
-    if (recognitionRef.current) {
-      recognitionRef.current.abort()
-    }
-    finalTranscriptRef.current = ''
+    stoppedRef.current = true
+    if (recognitionRef.current) recognitionRef.current.abort()
+    finalRef.current = ''
+    interimRef.current = ''
     setTranscript('')
     setInterimTranscript('')
     setError(null)
@@ -115,22 +105,8 @@ export function useVoiceInput({
   }, [])
 
   useEffect(() => {
-    return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.abort()
-      }
-    }
+    return () => { if (recognitionRef.current) recognitionRef.current.abort() }
   }, [])
 
-  return {
-    state,
-    transcript,
-    interimTranscript,
-    displayText: interimTranscript || transcript,
-    error,
-    supported,
-    start,
-    stop,
-    reset,
-  }
+  return { state, transcript, interimTranscript, error, supported, start, stop, reset, setTranscript }
 }

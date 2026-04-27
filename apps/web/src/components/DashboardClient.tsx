@@ -132,10 +132,7 @@ export default function DashboardClient({
   const [mealError, setMealError] = useState<string | null>(null)
   const runMealParseRef = useRef<(d: string) => void>()
 
-  const voice = useVoiceInput({
-    lang: 'he-IL',
-    onFinalTranscript: (t) => runMealParseRef.current?.(t),
-  })
+  const voice = useVoiceInput({ lang: 'he-IL' })
 
   // ── Data fetching ──────────────────────────────────────────────────────────
 
@@ -710,57 +707,82 @@ export default function DashboardClient({
 
                   {/* ── Voice panel (primary) ── */}
                   <div className="bg-card border border-border rounded-card p-4 space-y-3">
-                    <p className="text-xs font-semibold text-muted-fg text-center tracking-wide">דבר — מה אכלת?</p>
 
-                    {/* Mic button */}
-                    <div className="flex justify-center">
-                      <button
-                        onClick={() => voice.state === 'listening' ? voice.stop() : voice.start()}
-                        disabled={mealParsing}
-                        className={`w-16 h-16 rounded-pill flex items-center justify-center text-2xl shadow-elevated transition-all ${
-                          voice.state === 'listening'
-                            ? 'bg-brick text-white scale-110 animate-pulse'
-                            : voice.state === 'processing' || mealParsing
-                            ? 'bg-muted text-muted-fg'
-                            : 'bg-primary text-white hover:scale-105'
-                        }`}
-                      >
-                        {voice.state === 'listening' ? '⏹' : mealParsing ? '⏳' : '🎙️'}
-                      </button>
-                    </div>
+                    {/* Step 1: Mic button */}
+                    {(voice.state === 'idle' || voice.state === 'listening') && mealItems.length === 0 && (
+                      <>
+                        <p className="text-xs font-semibold text-muted-fg text-center">
+                          {voice.state === 'listening' ? 'מקשיב... לחץ ⏹ לעצור' : 'דבר — מה אכלת?'}
+                        </p>
+                        <div className="flex justify-center">
+                          <button
+                            onClick={() => voice.state === 'listening' ? voice.stop() : voice.start()}
+                            className={`w-16 h-16 rounded-pill flex items-center justify-center text-2xl shadow-elevated transition-all ${
+                              voice.state === 'listening'
+                                ? 'bg-brick text-white scale-110 animate-pulse'
+                                : 'bg-primary text-white hover:scale-105'
+                            }`}
+                          >
+                            {voice.state === 'listening' ? '⏹' : '🎙️'}
+                          </button>
+                        </div>
 
-                    {/* Live transcript */}
-                    {(voice.transcript || voice.interimTranscript) && (
-                      <div className="bg-muted rounded-xl px-3 py-2 text-sm text-foreground text-right min-h-[40px] leading-relaxed">
-                        <span>{voice.transcript}</span>
-                        {voice.interimTranscript && (
-                          <span className="text-muted-fg"> {voice.interimTranscript}</span>
+                        {/* Live transcript while listening */}
+                        {voice.state === 'listening' && (voice.transcript || voice.interimTranscript) && (
+                          <div className="bg-muted rounded-xl px-3 py-2 text-sm text-foreground text-right min-h-[40px] leading-relaxed">
+                            <span>{voice.transcript}</span>
+                            <span className="text-muted-fg"> {voice.interimTranscript}</span>
+                          </div>
                         )}
+
+                        {voice.state === 'idle' && (
+                          <p className="text-xs text-muted-fg text-center">
+                            {voice.supported ? 'לחץ על המיקרופון ותאר מה אכלת' : 'זיהוי קול לא נתמך — השתמש בחיפוש טקסט למטה'}
+                          </p>
+                        )}
+                        {voice.error && <p className="text-xs text-brick text-center">{voice.error}</p>}
+                      </>
+                    )}
+
+                    {/* Step 2: Editable transcript + Analyze button */}
+                    {voice.state === 'done' && mealItems.length === 0 && !mealParsing && (
+                      <>
+                        <p className="text-xs font-semibold text-muted-fg text-center">בדוק ותקן אם צריך, אז לחץ נתח</p>
+                        <textarea
+                          value={voice.transcript}
+                          onChange={e => voice.setTranscript(e.target.value)}
+                          rows={3}
+                          className="w-full px-3 py-2 border border-border rounded-xl text-sm bg-background text-foreground text-right focus:outline-none focus:ring-2 focus:ring-mustard/40 focus:border-mustard resize-none"
+                        />
+                        <div className="flex gap-2">
+                          <button
+                            onClick={voice.reset}
+                            className="px-4 py-2.5 border border-border rounded-pill text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+                          >
+                            מחק
+                          </button>
+                          <button
+                            onClick={() => runMealParseRef.current?.(voice.transcript)}
+                            disabled={!voice.transcript.trim()}
+                            className="flex-1 py-2.5 bg-primary text-white rounded-pill text-sm font-bold hover:bg-primary/90 disabled:opacity-40 transition-colors"
+                          >
+                            נתח ארוחה ✨
+                          </button>
+                        </div>
+                      </>
+                    )}
+
+                    {/* Step 2b: Parsing spinner */}
+                    {mealParsing && (
+                      <div className="flex flex-col items-center gap-2 py-2">
+                        <div className="text-2xl animate-spin">⏳</div>
+                        <p className="text-xs text-muted-fg">מנתח ארוחה...</p>
                       </div>
                     )}
 
-                    {voice.state === 'idle' && !voice.transcript && (
-                      <p className="text-xs text-muted-fg text-center">
-                        {voice.supported
-                          ? 'לחץ על המיקרופון ותאר מה אכלת'
-                          : 'זיהוי קול לא נתמך — השתמש בחיפוש טקסט למטה'}
-                      </p>
-                    )}
+                    {mealError && <p className="text-xs text-brick text-center">{mealError}</p>}
 
-                    {voice.error && (
-                      <p className="text-xs text-brick text-center">{voice.error}</p>
-                    )}
-
-                    {/* Parsing indicator */}
-                    {mealParsing && (
-                      <p className="text-xs text-muted-fg text-center animate-pulse">מנתח ארוחה...</p>
-                    )}
-
-                    {mealError && (
-                      <p className="text-xs text-brick text-center">{mealError}</p>
-                    )}
-
-                    {/* Meal items review */}
+                    {/* Step 3: Item review list */}
                     {mealItems.length > 0 && !mealParsing && (
                       <div className="space-y-2">
                         <p className="text-xs font-semibold text-muted-fg">זוהו {mealItems.length} פריטים:</p>
@@ -783,7 +805,7 @@ export default function DashboardClient({
                                 )}
                                 <button
                                   onClick={() => setMealItems(prev => prev.filter((_, j) => j !== i))}
-                                  className="w-5 h-5 rounded-pill text-muted-lo hover:text-brick transition-colors text-xs flex items-center justify-center"
+                                  className="w-5 h-5 rounded-pill text-muted-lo hover:text-brick text-xs flex items-center justify-center"
                                 >✕</button>
                               </div>
                             </div>
@@ -792,15 +814,15 @@ export default function DashboardClient({
                         {saveError && <p className="text-xs text-brick text-center">{saveError}</p>}
                         <div className="flex gap-2">
                           <button
-                            onClick={voice.reset}
-                            className="flex-1 py-2.5 border border-border rounded-pill text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+                            onClick={() => { setMealItems([]); voice.reset() }}
+                            className="px-4 py-2.5 border border-border rounded-pill text-sm font-semibold text-foreground hover:bg-muted transition-colors"
                           >
                             נסה שוב
                           </button>
                           <button
                             onClick={saveMealItems}
                             disabled={saving}
-                            className="flex-2 flex-1 py-2.5 bg-primary text-white rounded-pill text-sm font-bold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                            className="flex-1 py-2.5 bg-primary text-white rounded-pill text-sm font-bold hover:bg-primary/90 disabled:opacity-50 transition-colors"
                           >
                             {saving ? 'שומר...' : `רשום ${mealItems.length} פריטים`}
                           </button>
