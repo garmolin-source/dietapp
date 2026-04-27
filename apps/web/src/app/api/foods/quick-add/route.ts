@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     // Insert food
     const { data: food, error: foodErr } = await supabase
       .from('foods')
-      .insert({ name_he, name_en, category, star_type, source: 'user_search' })
+      .insert({ name_he, name_en, category, star_type, source: 'ai_agent' })
       .select()
       .single()
 
