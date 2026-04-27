@@ -4,6 +4,8 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import HeroRing from './HeroRing'
 import { getPortionVisualHint } from '@/lib/portionHint'
+import { useVoiceInput } from '@/hooks/useVoiceInput'
+import type { MealItem } from '@/app/api/foods/ai-meal/route'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -124,6 +126,17 @@ export default function DashboardClient({
   const [aiLoading, setAiLoading] = useState(false)
   const [aiResult, setAiResult] = useState<AiResult | null>(null)
 
+  // Voice + multi-item meal state
+  const [mealItems, setMealItems] = useState<MealItem[]>([])
+  const [mealParsing, setMealParsing] = useState(false)
+  const [mealError, setMealError] = useState<string | null>(null)
+  const runMealParseRef = useRef<(d: string) => void>()
+
+  const voice = useVoiceInput({
+    lang: 'he-IL',
+    onFinalTranscript: (t) => runMealParseRef.current?.(t),
+  })
+
   // ── Data fetching ──────────────────────────────────────────────────────────
 
   const fetchLogs = useCallback(async (date: string) => {
@@ -200,11 +213,89 @@ export default function DashboardClient({
   function openAdder(meal: string) {
     setActiveMeal(meal); setSearchQuery(''); setSearchResults([])
     setCart([]); setAiMode('none'); setAiDescribe(''); setAiResult(null); setSaveError(null)
+    setMealItems([]); setMealError(null); voice.reset()
   }
 
   function closeAdder() {
     setActiveMeal(null); setSearchQuery(''); setSearchResults([])
     setCart([]); setAiMode('none'); setAiDescribe(''); setAiResult(null); setSaveError(null)
+    setMealItems([]); setMealError(null); voice.reset()
+  }
+
+  runMealParseRef.current = runMealParse
+
+  async function runMealParse(description: string) {
+    if (!description.trim()) return
+    setMealParsing(true)
+    setMealError(null)
+    setMealItems([])
+    try {
+      const res = await fetch('/api/foods/ai-meal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description }),
+      })
+      const data = await res.json()
+      if (data.error) throw new Error(data.error)
+      setMealItems(data.items ?? [])
+    } catch (err: any) {
+      setMealError('שגיאה בניתוח הארוחה: ' + (err?.message ?? 'נסה שוב'))
+    } finally {
+      setMealParsing(false)
+    }
+  }
+
+  async function saveMealItems() {
+    if (!activeMeal || mealItems.length === 0) return
+    setSaving(true)
+    setSaveError(null)
+    try {
+      // Quick-add each item to get food_id + portion_id, then log
+      const rows = await Promise.all(mealItems.map(async item => {
+        const res = await fetch('/api/foods/quick-add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name_en: item.name_en,
+            name_he: item.name_he,
+            category: item.category,
+            star_type: item.star_type,
+            portions: [{
+              label_en: item.portion_label_en,
+              label_he: item.portion_label_he,
+              grams: item.grams,
+              yellow_stars: item.yellow_stars,
+              red_stars: item.red_stars,
+              is_default: true,
+              sort_order: 1,
+            }],
+          }),
+        })
+        const food = await res.json()
+        if (food.error) throw new Error(food.error)
+        const portion = food.portions?.[0]
+        if (!portion) throw new Error('No portion returned for ' + item.name_he)
+        return {
+          user_id: userId,
+          log_date: selectedDate,
+          meal_type: activeMeal,
+          food_id: food.id,
+          portion_id: portion.id,
+          quantity: 1,
+          yellow_stars_consumed: item.yellow_stars,
+          red_stars_consumed: item.red_stars,
+        }
+      }))
+
+      const { error } = await supabase.from('daily_logs').insert(rows)
+      if (error) throw new Error(error.message)
+      closeAdder()
+      fetchLogs(selectedDate)
+    } catch (err: any) {
+      setSaveError('שגיאה בשמירה: ' + (err?.message ?? 'נסה שוב'))
+    } finally {
+      setSaving(false)
+    }
   }
 
   async function runAiLookup(type: 'search' | 'describe', query: string) {
@@ -617,6 +708,114 @@ export default function DashboardClient({
               {isOpen && (
                 <div className="border-t border-border bg-background/60 p-4 space-y-3">
 
+                  {/* ── Voice panel (primary) ── */}
+                  <div className="bg-card border border-border rounded-card p-4 space-y-3">
+                    <p className="text-xs font-semibold text-muted-fg text-center tracking-wide">דבר — מה אכלת?</p>
+
+                    {/* Mic button */}
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() => voice.state === 'listening' ? voice.stop() : voice.start()}
+                        disabled={mealParsing}
+                        className={`w-16 h-16 rounded-pill flex items-center justify-center text-2xl shadow-elevated transition-all ${
+                          voice.state === 'listening'
+                            ? 'bg-brick text-white scale-110 animate-pulse'
+                            : voice.state === 'processing' || mealParsing
+                            ? 'bg-muted text-muted-fg'
+                            : 'bg-primary text-white hover:scale-105'
+                        }`}
+                      >
+                        {voice.state === 'listening' ? '⏹' : mealParsing ? '⏳' : '🎙️'}
+                      </button>
+                    </div>
+
+                    {/* Live transcript */}
+                    {(voice.transcript || voice.interimTranscript) && (
+                      <div className="bg-muted rounded-xl px-3 py-2 text-sm text-foreground text-right min-h-[40px] leading-relaxed">
+                        <span>{voice.transcript}</span>
+                        {voice.interimTranscript && (
+                          <span className="text-muted-fg"> {voice.interimTranscript}</span>
+                        )}
+                      </div>
+                    )}
+
+                    {voice.state === 'idle' && !voice.transcript && (
+                      <p className="text-xs text-muted-fg text-center">
+                        {voice.supported
+                          ? 'לחץ על המיקרופון ותאר מה אכלת'
+                          : 'זיהוי קול לא נתמך — השתמש בחיפוש טקסט למטה'}
+                      </p>
+                    )}
+
+                    {voice.error && (
+                      <p className="text-xs text-brick text-center">{voice.error}</p>
+                    )}
+
+                    {/* Parsing indicator */}
+                    {mealParsing && (
+                      <p className="text-xs text-muted-fg text-center animate-pulse">מנתח ארוחה...</p>
+                    )}
+
+                    {mealError && (
+                      <p className="text-xs text-brick text-center">{mealError}</p>
+                    )}
+
+                    {/* Meal items review */}
+                    {mealItems.length > 0 && !mealParsing && (
+                      <div className="space-y-2">
+                        <p className="text-xs font-semibold text-muted-fg">זוהו {mealItems.length} פריטים:</p>
+                        <div className="bg-background rounded-card border border-border divide-y divide-border overflow-hidden">
+                          {mealItems.map((item, i) => (
+                            <div key={i} className="flex items-center justify-between px-3 py-2.5">
+                              <div className="min-w-0">
+                                <div className="text-sm font-semibold text-foreground">{item.name_he}</div>
+                                <div className="text-xs text-muted-fg">{item.portion_label_he}</div>
+                              </div>
+                              <div className="flex items-center gap-1.5 flex-shrink-0">
+                                {item.yellow_stars > 0 && (
+                                  <span className="px-1.5 py-0.5 rounded-pill bg-mustard-bg text-mustard text-xs font-bold">★ {item.yellow_stars}</span>
+                                )}
+                                {item.red_stars > 0 && (
+                                  <span className="px-1.5 py-0.5 rounded-pill bg-brick-bg text-brick text-xs font-bold">★ {item.red_stars}</span>
+                                )}
+                                {item.yellow_stars === 0 && item.red_stars === 0 && (
+                                  <span className="px-1.5 py-0.5 rounded-pill bg-leaf-bg text-leaf text-xs font-bold">✓</span>
+                                )}
+                                <button
+                                  onClick={() => setMealItems(prev => prev.filter((_, j) => j !== i))}
+                                  className="w-5 h-5 rounded-pill text-muted-lo hover:text-brick transition-colors text-xs flex items-center justify-center"
+                                >✕</button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        {saveError && <p className="text-xs text-brick text-center">{saveError}</p>}
+                        <div className="flex gap-2">
+                          <button
+                            onClick={voice.reset}
+                            className="flex-1 py-2.5 border border-border rounded-pill text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+                          >
+                            נסה שוב
+                          </button>
+                          <button
+                            onClick={saveMealItems}
+                            disabled={saving}
+                            className="flex-2 flex-1 py-2.5 bg-primary text-white rounded-pill text-sm font-bold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                          >
+                            {saving ? 'שומר...' : `רשום ${mealItems.length} פריטים`}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Divider */}
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-px bg-border" />
+                    <span className="text-xs text-muted-fg font-medium">או חפש ידנית</span>
+                    <div className="flex-1 h-px bg-border" />
+                  </div>
+
                   {/* Search input */}
                   <div className="flex items-center gap-2 bg-card border border-border rounded-pill px-3 py-2 shadow-soft">
                     <span className="text-muted-fg text-sm">🔍</span>
@@ -625,7 +824,6 @@ export default function DashboardClient({
                       value={searchQuery}
                       onChange={e => setSearchQuery(e.target.value)}
                       placeholder="חפש מזון (עברית או אנגלית)..."
-                      autoFocus
                       className="flex-1 text-sm bg-transparent focus:outline-none text-right text-foreground placeholder:text-muted-fg"
                     />
                   </div>
