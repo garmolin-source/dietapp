@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import NavBar from '@/components/NavBar'
+import FloatingMenu from '@/components/FloatingMenu'
 
 export default async function ProtectedLayout({
   children,
@@ -16,8 +16,11 @@ export default async function ProtectedLayout({
 
   return (
     <div className="min-h-screen bg-background">
-      <NavBar />
-      <main className="max-w-2xl mx-auto px-4 py-6">
+      <main className="max-w-2xl mx-auto px-4 pt-4 pb-8">
+        {/* Tiny menu button in top-left corner */}
+        <div className="flex justify-end mb-3">
+          <FloatingMenu />
+        </div>
         {children}
       </main>
     </div>
