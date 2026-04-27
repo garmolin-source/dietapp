@@ -39,9 +39,10 @@ export async function POST(req: Request) {
 
     const prompt = `The user described what they ate: "${description}"
 
-Break this down into individual food components. Each ingredient or food item should be a separate entry.
+List each distinct food or dish the user mentioned as a single item — do NOT break down recipes into ingredients.
+For example: "butter cookie" → one item "Butter Cookie", NOT butter + flour + egg.
+For example: "shakshuka" → one item "Shakshuka", NOT eggs + tomato sauce + oil.
 Use realistic Israeli portion assumptions.
-For compound dishes (e.g. shakshuka), list each component separately (eggs, tomato sauce, oil).
 Ignore water and plain black coffee (or mark as free).
 
 Return JSON in this exact format:
