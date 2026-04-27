@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Description is required' }, { status: 400 })
     }
 
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+    const client = new Anthropic({ apiKey: process.env.MY_ANTHROPIC_KEY })
 
     const prompt = `The user described what they ate: "${description}"
 
@@ -101,7 +101,7 @@ Return ONLY the JSON, no markdown.`
   } catch (err: any) {
     console.error('[ai-meal]', err)
     const msg = err?.message ?? 'Unknown error'
-    const isKeyMissing = !process.env.ANTHROPIC_API_KEY
+    const isKeyMissing = !process.env.MY_ANTHROPIC_KEY
     return NextResponse.json({
       error: isKeyMissing
         ? 'ANTHROPIC_API_KEY is not set in environment variables'

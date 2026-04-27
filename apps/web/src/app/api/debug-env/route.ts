@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const anthropic = process.env.ANTHROPIC_API_KEY
+  const anthropic = process.env.MY_ANTHROPIC_KEY
   const supabase = process.env.NEXT_PUBLIC_SUPABASE_URL
 
   return NextResponse.json({
